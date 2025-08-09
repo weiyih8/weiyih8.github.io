@@ -44,7 +44,7 @@
     </style>
   </head>
 
-  <body class="bg-white text-ink dark:bg-neutral-950 dark:text-neutral-100 font-body">
+  <body class="bg-white text-ink dark:bg-neutral-950 dark:text-neutral-100 font-body snap-y snap-mandatory">
     <!-- Accent bar -->
     <div class="h-1 w-full bg-gradient-to-r from-brand-orange via-brand-red to-brand-amber"></div>
 
@@ -52,10 +52,10 @@
     <button id="themeToggle" class="fixed bottom-4 right-4 z-50 rounded-md border border-neutral-300/60 dark:border-neutral-700/60 bg-white/70 dark:bg-neutral-900/70 backdrop-blur px-3 py-1.5 text-xs">Dark</button>
 
     <!-- One-page scroll container -->
-    <main class="snap-container">
+    <main>
 
       <!-- HERO -->
-      <section id="home" class="section min-h-screen grid grid-rows-[auto,1fr]">
+      <section id="home" class="section min-h-screen snap-start grid grid-rows-[auto,1fr]">
         <div class="grid-bg bg-brand-tan/40 dark:bg-neutral-950">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
             <div class="grid lg:grid-cols-2 gap-8 items-center">
@@ -81,7 +81,7 @@
       </section>
 
       <!-- EXPERIENCE -->
-      <section id="experience" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <section id="experience" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div class="py-16 md:py-24">
             <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Experience</span></h2>
@@ -108,7 +108,7 @@
       </section>
 
       <!-- EDUCATION -->
-      <section id="education" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+      <section id="education" class="section min-h-screen snap-start flex items-center bg-brand-tan/45 dark:bg-neutral-900">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div class="py-16 md:py-24">
             <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-orange">Education</span></h2>
@@ -128,7 +128,7 @@
       </section>
 
       <!-- PROJECTS -->
-      <section id="projects" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <section id="projects" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div class="py-16 md:py-24">
             <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-amber">Projects</span></h2>
@@ -143,7 +143,7 @@
       </section>
 
       <!-- LEADERSHIP -->
-      <section id="leadership" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+      <section id="leadership" class="section min-h-screen snap-start flex items-center bg-brand-tan/45 dark:bg-neutral-900">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div class="py-16 md:py-24">
             <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Leadership</span></h2>
@@ -156,7 +156,7 @@
       </section>
 
       <!-- CONTACT -->
-      <section id="contact" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <section id="contact" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           <div class="py-16 md:py-24">
             <h2 class="font-display text-5xl md:text-7xl font-extrabold leading-tight">Let’s build something <span class="text-brand-orange">robust</span>.</h2>
@@ -187,8 +187,11 @@
 
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
       const setSize = () => {
-        const w = canvas.clientWidth; const h = canvas.clientHeight;
+        const el = canvas.parentElement || canvas;
+        const w = el.clientWidth || 800;
+        const h = el.clientHeight || 450;
         renderer.setSize(w, h, false);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         camera.aspect = w / h; camera.updateProjectionMatrix();
       };
 
@@ -220,12 +223,23 @@
       (async () => {
         try {
           const gltf = await new Promise((resolve, reject) => {
-            loader.load('/assets/Ready_Chain_2.glb', (g) => resolve(g), undefined, reject);
+            loader.load('assets/Ready_Chain_2.glb', (g) => resolve(g), undefined, (err) => reject(err));
           });
           const model = gltf.scene; scene.add(model); fitToView(model);
         } catch (e) {
-          hint.classList.remove('hidden');
-          hint.textContent = 'Place Ready_Chain_2.glb at /assets for viewing.';
+          console.error('GLB load failed:', e);
+          try {
+            const demo = await new Promise((resolve, reject) => {
+              loader.load('https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', (g) => resolve(g), undefined, reject);
+            });
+            const model = demo.scene; scene.add(model); fitToView(model);
+            hint.classList.remove('hidden');
+            hint.textContent = 'Loaded demo model. To use yours, upload assets/Ready_Chain_2.glb (ensure it\'s <100MB or use Git LFS).';
+          } catch (e2) {
+            console.error('Demo load failed:', e2);
+            hint.classList.remove('hidden');
+            hint.textContent = 'Could not load model. Ensure assets/Ready_Chain_2.glb exists and is under 100MB (or use Git LFS).';
+          }
         }
       })();
 
