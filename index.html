@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Weiyi | ECE • UAV Systems • AI</title>
-    <meta name="description" content="Weiyi — Electrical & Computer Engineering student focused on UAV systems, embedded compute, and AI." />
+    <title>Weiyi Huang | ECE • UAV Systems • AI</title>
+    <meta name="description" content="Weiyi Huang — Electrical & Computer Engineering student focused on UAV systems, embedded compute, and AI." />
 
     <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,18 +41,48 @@
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
       .section { scroll-snap-align: start; scroll-margin-top: 5rem; }
+      /* PCB trace overlay */
+      .pcb-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .16; background-size: 560px 560px; background-repeat: repeat; mix-blend-mode: multiply; }
+      .dark .pcb-overlay { opacity: .10; mix-blend-mode: screen; filter: invert(1) contrast(0.9) brightness(0.9); }
+      .pcb-overlay { background-image: url('data:image/svg+xml;utf8,\
+        <svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560">\
+          <defs>\
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">\
+              <path d="M0 0 H80 M0 0 V80" stroke="%23888" stroke-width="0.5" opacity="0.25"/>\
+            </pattern>\
+          </defs>\
+          <rect width="100%" height="100%" fill="url(%23grid)"/>\
+          <g stroke="%23866" stroke-width="2" fill="none" opacity="0.6">\
+            <path d="M40 60 H200 V200 H360"/>\
+            <path d="M80 300 H180 V120 H480"/>\
+            <path d="M520 60 V240 H300 V420"/>\
+            <path d="M60 500 H220 V340 H420 V200"/>\
+          </g>\
+          <g fill="%23866" opacity="0.7">\
+            <circle cx="200" cy="200" r="4"/>\
+            <circle cx="360" cy="200" r="4"/>\
+            <circle cx="180" cy="120" r="4"/>\
+            <circle cx="480" cy="120" r="4"/>\
+            <circle cx="300" cy="420" r="4"/>\
+            <circle cx="220" cy="340" r="4"/>\
+            <circle cx="420" cy="200" r="4"/>\
+          </g>\
+        </svg>'); }
     </style>
   </head>
 
-  <body class="bg-white text-ink dark:bg-neutral-950 dark:text-neutral-100 font-body snap-y snap-mandatory">
+  <body class="bg-white text-ink dark:bg-neutral-950 dark:text-neutral-100 font-body snap-y snap-mandatory relative">
+    <!-- Background overlays -->
+    <div class="pcb-overlay" aria-hidden="true"></div>
+
     <!-- Accent bar -->
-    <div class="h-1 w-full bg-gradient-to-r from-brand-orange via-brand-red to-brand-amber"></div>
+    <div class="h-1 w-full bg-gradient-to-r from-brand-orange via-brand-red to-brand-amber relative z-10"></div>
 
     <!-- Sticky top nav -->
     <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-neutral-900/70 border-b border-neutral-200/60 dark:border-neutral-800/80">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#home" class="font-display font-semibold tracking-tight">Weiyi</a>
-        <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#home" class="font-display font-extrabold tracking-tight text-xl md:text-2xl lg:text-3xl">Weiyi Huang</a>
+        <nav class="hidden md:flex items-center gap-6 text-[15px] lg:text-lg">
           <a href="#experience" class="hover:text-brand-orange underline-link">Experience</a>
           <a href="#education" class="hover:text-brand-orange underline-link">Education</a>
           <a href="#projects" class="hover:text-brand-orange underline-link">Projects</a>
@@ -66,7 +96,7 @@
       </div>
       <!-- Mobile menu -->
       <div id="mobileMenu" class="md:hidden hidden border-t border-neutral-200 dark:border-neutral-800">
-        <nav class="px-4 py-3 flex flex-col gap-2 text-sm bg-white dark:bg-neutral-950">
+        <nav class="px-4 py-3 flex flex-col gap-2 text-base bg-white dark:bg-neutral-950">
           <a href="#experience" class="py-2">Experience</a>
           <a href="#education" class="py-2">Education</a>
           <a href="#projects" class="py-2">Projects</a>
@@ -77,7 +107,7 @@
     </header>
 
     <!-- HERO (clean) -->
-    <section id="home" class="section min-h-screen grid place-items-center">
+    <section id="home" class="section min-h-screen grid place-items-center relative z-10">
       <div class="w-full pt-16"> <!-- offset for fixed header -->
         <div class="grid-bg bg-brand-tan/40 dark:bg-neutral-950">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
@@ -99,7 +129,7 @@
                 </div>
               </div>
               <div class="lg:col-span-5">
-                <div class="rounded-2xl ring-1 ring-neutral-200/70 dark:ring-neutral-800/70 p-8">
+                <div class="rounded-2xl ring-1 ring-neutral-200/70 dark:ring-neutral-800/70 p-8 bg-white/70 dark:bg-neutral-900/70">
                   <p class="text-sm uppercase tracking-wide text-neutral-500">Focus</p>
                   <ul class="mt-3 space-y-2 text-base">
                     <li>UAV Power & Autonomy</li>
@@ -116,7 +146,7 @@
     </section>
 
     <!-- EXPERIENCE (left aligned) -->
-    <section id="experience" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+    <section id="experience" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950 relative z-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div class="py-16 md:py-28">
           <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight">EXPERIENCE</h2>
@@ -143,7 +173,7 @@
     </section>
 
     <!-- EDUCATION (right aligned) -->
-    <section id="education" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+    <section id="education" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900 relative z-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div class="py-16 md:py-28 text-right">
           <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight">EDUCATION</h2>
@@ -163,7 +193,7 @@
     </section>
 
     <!-- PROJECTS (left aligned) -->
-    <section id="projects" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+    <section id="projects" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950 relative z-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div class="py-16 md:py-28">
           <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight">PROJECTS</h2>
@@ -178,7 +208,7 @@
     </section>
 
     <!-- LEADERSHIP (right aligned) -->
-    <section id="leadership" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+    <section id="leadership" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900 relative z-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div class="py-16 md:py-28 text-right">
           <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight">LEADERSHIP</h2>
@@ -191,7 +221,7 @@
     </section>
 
     <!-- CONTACT (centered) -->
-    <section id="contact" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+    <section id="contact" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950 relative z-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div class="py-16 md:py-28 text-center">
           <h2 class="font-headline text-[12vw] md:text-8xl leading-none tracking-tight">LET’S TALK</h2>
@@ -204,37 +234,39 @@
       </div>
     </section>
 
-    <footer class="py-8 text-center text-xs text-neutral-600 dark:text-neutral-400">
-      <p>© <span id="year"></span> Weiyi. Built on GitHub Pages.</p>
+    <footer class="py-8 text-center text-xs text-neutral-600 dark:text-neutral-400 relative z-10">
+      <p>© <span id="year"></span> Weiyi Huang. Built on GitHub Pages.</p>
     </footer>
 
     <script>
-      // Theme toggle
-      const themeToggle = document.getElementById('themeToggle');
-      const root = document.documentElement;
-      const stored = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      function setTheme(mode){
-        if (mode === 'dark') { root.classList.add('dark'); themeToggle.textContent = 'Light'; }
-        else { root.classList.remove('dark'); themeToggle.textContent = 'Dark'; }
-        localStorage.setItem('theme', mode);
-      }
-      setTheme(stored || (prefersDark ? 'dark' : 'light'));
-      themeToggle.addEventListener('click', () => {
-        const now = root.classList.contains('dark') ? 'light' : 'dark';
-        setTheme(now);
+      // SIMPLE, RELIABLE THEME TOGGLE (original working approach)
+      window.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        function apply(mode){
+          if (mode === 'dark') { root.classList.add('dark'); themeToggle.textContent = 'Light'; }
+          else { root.classList.remove('dark'); themeToggle.textContent = 'Dark'; }
+          localStorage.setItem('theme', mode);
+        }
+        apply(stored || (prefersDark ? 'dark' : 'light'));
+
+        themeToggle.addEventListener('click', () => {
+          const next = root.classList.contains('dark') ? 'light' : 'dark';
+          apply(next);
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
       });
-
-      // Mobile menu toggle
-      const menuBtn = document.getElementById('menuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-
-      // Close mobile menu on link click
-      document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
-      // Year
-      document.getElementById('year')?.textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
