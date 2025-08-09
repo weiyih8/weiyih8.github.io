@@ -6,115 +6,136 @@
 <title>Weiyi Huang | ECE • UAV Systems • AI</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: {
-        headline: ['Teko', 'sans-serif'],
-        display: ['Saira', 'sans-serif'],
-        body: ['Inter', 'sans-serif']
-      },
-      colors: {
-        brand: {
-          tan: '#FDDCA9',
-          amber: '#FFA712',
-          orange: '#E76219',
-          red: '#C21717',
-          darkTan: '#BFA47A',
-          charcoal: '#141414'
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          headline: ['Teko','sans-serif'],
+          display: ['Saira','sans-serif'],
+          body: ['Inter','sans-serif']
+        },
+        colors: {
+          brand: { tan:'#FDDCA9', amber:'#FFA712', orange:'#E76219', red:'#C21717', charcoal:'#141414' }
         }
       }
     }
   }
-}
 </script>
 <style>
-.section { scroll-snap-align: start; scroll-margin-top: 5rem; }
-.pcb-layer { position: fixed; inset: -10vh 0; pointer-events: none; z-index: 0; will-change: transform; }
-.pcb-layer svg { width: 100%; height: 100%; }
-.alt-bg { background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 10px); }
-.dark .alt-bg { background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 10px); }
+  .section{scroll-snap-align:start;scroll-margin-top:5rem}
+  .alt-bg{background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.03)0,rgba(0,0,0,.03)2px,transparent 2px,transparent 10px)}
+  .dark .alt-bg{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.05)0,rgba(255,255,255,.05)2px,transparent 2px,transparent 10px)}
+  /* GPU-friendly PCB backgrounds (images, not inline SVG DOM) */
+  .pcb-layer{position:fixed;inset:-10vh 0;pointer-events:none;z-index:0;will-change:transform;opacity:.18;background-repeat:repeat;background-size:640px 640px}
+  .pcb-a{background-image:url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">\
+      <rect width="100%" height="100%" fill="transparent"/>\
+      <g stroke="%23E76219" stroke-width="8" stroke-linejoin="round" stroke-linecap="square" fill="none" opacity="0.65">\
+        <path d="M20 60 L160 60 L200 100 L360 100 L400 60 L600 60"/>\
+        <path d="M20 220 L220 220 L260 180 L420 180 L460 220 L620 220"/>\
+        <path d="M60 380 L240 380 L300 320 L480 320"/>\
+      </g>\
+      <g fill="%23C21717" opacity="0.8">\
+        <circle cx="200" cy="100" r="9"/>\
+        <circle cx="360" cy="100" r="9"/>\
+        <circle cx="260" cy="180" r="9"/>\
+        <circle cx="300" cy="320" r="9"/>\
+      </g>\
+      <g stroke="%23FFA712" stroke-width="3" opacity="0.5">\
+        <path d="M0 140 H640"/><path d="M0 300 H640"/><path d="M0 460 H640"/>\
+      </g>\
+    </svg>');}
+  .pcb-b{opacity:.14;background-image:url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">\
+      <rect width="100%" height="100%" fill="transparent"/>\
+      <g stroke="%23FFA712" stroke-width="7" stroke-linejoin="round" fill="none" opacity="0.55">\
+        <path d="M620 80 L460 80 L420 120 L260 120 L220 80 L20 80"/>\
+        <path d="M580 240 L420 240 L360 300 L180 300 L120 240 L20 240"/>\
+      </g>\
+      <g fill="%23E76219" opacity="0.7">\
+        <circle cx="420" cy="120" r="8"/>\
+        <circle cx="360" cy="300" r="8"/>\
+      </g>\
+    </svg>');}
+  .dark .pcb-layer{opacity:.2}
 </style>
 </head>
 <body class="bg-white text-black dark:bg-brand-charcoal dark:text-neutral-100 font-body snap-y snap-mandatory relative">
-<div class="pcb-layer" aria-hidden="true">
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 800">
-<g stroke="#E76219" stroke-width="6" fill="none">
-<path d="M0 40 L100 40 L140 80 L240 80 L280 40 L400 40" />
-<path d="M0 200 L200 200 L240 160 L400 160" />
-</g>
-<g fill="#C21717">
-<circle cx="140" cy="80" r="8"/>
-<circle cx="240" cy="80" r="8"/>
-<circle cx="240" cy="160" r="8"/>
-</g>
-</svg>
-</div>
-<header class="fixed top-0 inset-x-0 z-50 bg-white/70 dark:bg-brand-charcoal/80 border-b border-neutral-300 dark:border-neutral-700">
-  <div class="max-w-7xl mx-auto flex justify-between items-center h-16 px-4">
-    <a href="#home" class="font-display text-3xl font-extrabold">Weiyi Huang</a>
-    <nav class="hidden md:flex gap-6 text-lg">
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#projects">Projects</a>
-      <a href="#leadership">Leadership</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <button id="themeToggle">Dark</button>
+  <!-- Background (safe, non-blocking) -->
+  <div class="pcb-layer pcb-a" aria-hidden="true"></div>
+  <div class="pcb-layer pcb-b" aria-hidden="true"></div>
+
+  <!-- Content wrapper ensures it always sits above backgrounds -->
+  <div class="relative z-10">
+    <header class="fixed top-0 inset-x-0 z-50 bg-white/70 dark:bg-brand-charcoal/80 border-b border-neutral-300 dark:border-neutral-700 backdrop-blur">
+      <div class="max-w-7xl mx-auto flex justify-between items-center h-16 px-4">
+        <a href="#home" class="font-display text-3xl md:text-4xl font-extrabold">Weiyi Huang</a>
+        <nav class="hidden md:flex gap-6 text-lg">
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#projects">Projects</a>
+          <a href="#leadership">Leadership</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button id="themeToggle" class="px-3 py-1.5 text-sm rounded-md border border-neutral-300 dark:border-neutral-700">Dark</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="section min-h-screen flex items-center justify-center">
+        <h1 class="text-6xl md:text-7xl font-headline text-center px-4">Reliable autonomy, <span class="text-brand-orange">built</span> end‑to‑end.</h1>
+      </section>
+      <section id="experience" class="section min-h-screen alt-bg flex items-center justify-center">
+        <h2 class="text-8xl font-headline">EXPERIENCE</h2>
+      </section>
+      <section id="education" class="section min-h-screen flex items-center justify-center">
+        <h2 class="text-8xl font-headline">EDUCATION</h2>
+      </section>
+      <section id="projects" class="section min-h-screen alt-bg flex items-center justify-center">
+        <h2 class="text-8xl font-headline">PROJECTS</h2>
+      </section>
+      <section id="leadership" class="section min-h-screen flex items-center justify-center">
+        <h2 class="text-8xl font-headline">LEADERSHIP</h2>
+      </section>
+      <section id="contact" class="section min-h-screen alt-bg flex items-center justify-center">
+        <h2 class="text-8xl font-headline">LET’S TALK</h2>
+      </section>
+    </main>
+
+    <footer class="text-center py-6 text-sm">© <span id="year"></span> Wayne Works: Applied Sciences Division — Content licensed under <a class="underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></footer>
   </div>
-</header>
-<section id="home" class="section min-h-screen flex items-center justify-center">
-  <h1 class="text-6xl font-headline">Reliable autonomy, <span class="text-brand-orange">built</span> end-to-end.</h1>
-</section>
-<section id="experience" class="section min-h-screen alt-bg flex items-center justify-center">
-  <h2 class="text-8xl font-headline">EXPERIENCE</h2>
-</section>
-<section id="education" class="section min-h-screen flex items-center justify-center">
-  <h2 class="text-8xl font-headline">EDUCATION</h2>
-</section>
-<section id="projects" class="section min-h-screen alt-bg flex items-center justify-center">
-  <h2 class="text-8xl font-headline">PROJECTS</h2>
-</section>
-<section id="leadership" class="section min-h-screen flex items-center justify-center">
-  <h2 class="text-8xl font-headline">LEADERSHIP</h2>
-</section>
-<section id="contact" class="section min-h-screen alt-bg flex items-center justify-center">
-  <h2 class="text-8xl font-headline">LET'S TALK</h2>
-</section>
-<footer class="text-center py-4 text-sm">© <span id="year"></span> Wayne Works: Applied Sciences Division — Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></footer>
+
 <script>
-const themeToggle=document.getElementById('themeToggle');
-const root=document.documentElement;
-const stored=localStorage.getItem('theme');
-const prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
-function apply(mode){if(mode==='dark'){root.classList.add('dark');themeToggle.textContent='Light';}else{root.classList.remove('dark');themeToggle.textContent='Dark';}localStorage.setItem('theme',mode);}
-apply(stored||(prefersDark?'dark':'light'));
-themeToggle.addEventListener('click',()=>{apply(root.classList.contains('dark')?'light':'dark')});
-// smooth scroll with ease-in-out
-function smoothScroll(target){
-  const start=window.scrollY;
-  const end=document.querySelector(target).offsetTop-60;
-  const distance=end-start;
-  const duration=800;
-  let startTime=null;
-  function animation(currentTime){
-    if(startTime===null) startTime=currentTime;
-    const timeElapsed=currentTime-startTime;
-    const progress=timeElapsed/duration;
-    const ease=progress<0.5?4*progress*progress*progress:(progress-1)*(2*progress-2)*(2*progress-2)+1;
-    window.scrollTo(0,start+distance*ease);
-    if(timeElapsed<duration) requestAnimationFrame(animation);
+  // Theme toggle (stable)
+  const themeToggle=document.getElementById('themeToggle');
+  const root=document.documentElement;
+  const stored=localStorage.getItem('theme');
+  const prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(mode){ if(mode==='dark'){root.classList.add('dark');themeToggle.textContent='Light'} else {root.classList.remove('dark');themeToggle.textContent='Dark'} localStorage.setItem('theme',mode) }
+  apply(stored||(prefersDark?'dark':'light'));
+  themeToggle.addEventListener('click',()=>apply(root.classList.contains('dark')?'light':'dark'));
+
+  // Eased smooth scroll with accelerate/decelerate
+  function smoothScrollTo(target){
+    const el=document.querySelector(target); if(!el) return;
+    const start=window.scrollY; const end=el.getBoundingClientRect().top+window.scrollY-64; // header offset
+    const distance=end-start; const duration=900; let t0=null;
+    function easeInOutCubic(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+    function step(ts){ if(t0===null) t0=ts; const p=Math.min((ts-t0)/duration,1); const y=start+distance*easeInOutCubic(p); window.scrollTo(0,y); if(p<1) requestAnimationFrame(step) }
+    requestAnimationFrame(step)
   }
-  requestAnimationFrame(animation);
-}
-document.querySelectorAll('nav a').forEach(link=>{
-  link.addEventListener('click',e=>{
-    e.preventDefault();
-    smoothScroll(link.getAttribute('href'));
-  });
-});
-document.getElementById('year').textContent=new Date().getFullYear();
+  document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();smoothScrollTo(a.getAttribute('href'))}))
+
+  // Parallax (guarded, cheap)
+  const layerA=document.querySelector('.pcb-a');
+  const layerB=document.querySelector('.pcb-b');
+  if(layerA && layerB){
+    let y=0,ticking=false; const onScroll=()=>{ y=window.scrollY; if(!ticking){ requestAnimationFrame(()=>{ layerA.style.transform=`translate3d(0, ${-y*0.07}px, 0)`; layerB.style.transform=`translate3d(0, ${-y*0.14}px, 0)`; ticking=false }); ticking=true } };
+    window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  }
+
+  document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
