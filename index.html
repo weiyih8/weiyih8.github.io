@@ -40,7 +40,6 @@
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
       .section { scroll-snap-align: start; }
-      .snap-container { scroll-snap-type: y mandatory; }
     </style>
   </head>
 
@@ -51,203 +50,137 @@
     <!-- Theme toggle -->
     <button id="themeToggle" class="fixed bottom-4 right-4 z-50 rounded-md border border-neutral-300/60 dark:border-neutral-700/60 bg-white/70 dark:bg-neutral-900/70 backdrop-blur px-3 py-1.5 text-xs">Dark</button>
 
-    <!-- One-page scroll container -->
-    <main>
-
-      <!-- HERO -->
-      <section id="home" class="section min-h-screen snap-start grid grid-rows-[auto,1fr]">
+    <!-- HERO (no 3D) -->
+    <section id="home" class="section min-h-screen grid place-items-center">
+      <div class="w-full">
         <div class="grid-bg bg-brand-tan/40 dark:bg-neutral-950">
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-            <div class="grid lg:grid-cols-2 gap-8 items-center">
-              <!-- 3D Canvas -->
-              <div class="relative aspect-[16/12] rounded-xl overflow-hidden ring-1 ring-neutral-200/70 dark:ring-neutral-800/70 bg-white dark:bg-neutral-900">
-                <canvas id="hero3d" class="w-full h-full"></canvas>
-                <div id="modelHint" class="absolute bottom-2 left-2 right-2 text-[11px] text-neutral-600 dark:text-neutral-300 bg-white/70 dark:bg-neutral-900/70 backdrop-blur px-2 py-1 rounded hidden"></div>
-              </div>
-              <!-- Headline -->
-              <div class="flex flex-col gap-6">
-                <h1 class="font-display font-extrabold tracking-tight text-5xl md:text-7xl leading-[0.95]">Reliable autonomy, <span class="text-brand-orange">built</span> end‑to‑end.</h1>
-                <p class="text-lg md:text-xl text-neutral-700 dark:text-neutral-300 max-w-prose">I’m Weiyi — ECE junior focused on UAV power, embedded compute, and AI. From 100V/150A arming hardware to DroneCAN/ArduPilot and multi‑camera voxel pipelines, I build systems that survive reality.</p>
-                <div class="flex flex-wrap gap-4 text-sm">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div class="grid lg:grid-cols-12 gap-10 items-center">
+              <div class="lg:col-span-7">
+                <h1 class="font-display font-extrabold tracking-tight text-5xl md:text-7xl leading-[0.95]">
+                  Reliable autonomy,
+                  <span class="text-brand-orange">built</span>
+                  end‑to‑end.
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-neutral-700 dark:text-neutral-300 max-w-prose">
+                  I’m Weiyi — ECE junior focused on UAV power, embedded compute, and AI. From 100V/150A arming hardware to DroneCAN/ArduPilot and multi‑camera voxel pipelines, I build systems that survive reality.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4 text-sm">
                   <a href="#experience" class="underline-link">Experience ↓</a>
                   <a href="#education" class="underline-link">Education ↓</a>
                   <a href="#projects" class="underline-link">Projects ↓</a>
                   <a href="#contact" class="underline-link">Contact ↓</a>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EXPERIENCE -->
-      <section id="experience" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div class="py-16 md:py-24">
-            <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Experience</span></h2>
-            <div class="mt-10 space-y-12 md:space-y-16">
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
-                <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Architected power, RX/TX, FPV, and PDB for <em>LawnDart</em> UAS targeting speed records. Firmware bring‑up on iNAV. Built a motor test stand (force sensor + laser RPM) to characterize max‑power operating envelopes.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">CLASSE (CHESS/HMF Lab) — Electrical Engineer Intern</h3>
-                <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Integrated & validated five mission‑critical electrical systems; routed ~7,500 ft of sensor cabling; upgraded thermal/OK/radiation control chassis; engineered control‑panel workarounds to reuse legacy interfaces.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell SciFi Lab — Research Assistant</h3>
-                <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Calibrated automated acoustic sensing rig with custom PCBs & Bluetooth modules; integrated a Python NN to classify exercise scalograms for a hands‑free workout assistant.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell Biomedical Device — Product Dev & Media</h3>
-                <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Built wireless pump controller (ATtiny85 + HC‑08 + custom PCB). Led UX refresh & media; produced promo video reaching 5k+ viewers and boosted recruitment 25%.</p>
+              <div class="lg:col-span-5">
+                <div class="rounded-2xl ring-1 ring-neutral-200/70 dark:ring-neutral-800/70 p-8">
+                  <p class="text-sm uppercase tracking-wide text-neutral-500">Focus</p>
+                  <ul class="mt-3 space-y-2 text-base">
+                    <li>UAV Power & Autonomy</li>
+                    <li>ArduPilot • CubePilot • UAVCAN</li>
+                    <li>RPi / Jetson • C/C++ • Python</li>
+                    <li>Vision • Self‑improving models</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- EDUCATION -->
-      <section id="education" class="section min-h-screen snap-start flex items-center bg-brand-tan/45 dark:bg-neutral-900">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div class="py-16 md:py-24">
-            <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-orange">Education</span></h2>
-            <div class="mt-10 space-y-12">
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell University — B.S. Electrical & Computer Engineering</h3>
-                <p class="mt-3 text-base md:text-lg text-neutral-800 dark:text-neutral-200">Aerospace Engineering minor • Expected May 2027</p>
-                <p class="mt-2 max-w-4xl text-sm md:text-base text-neutral-700 dark:text-neutral-300">Relevant: Computer Architecture, Digital Logic & Comp Org, Intro Circuits, Microelectronics, Probability & Inference for Random Signals & Systems, Embedded Systems (FA25), Thermodynamics, Statics & Mechanics of Solids, Fluid Mechanics (FA25), Intro to Spaceflight Mechanics (FA25).</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Phillips Exeter Academy</h3>
-                <p class="mt-3 text-base md:text-lg text-neutral-800 dark:text-neutral-200">Aug 2020 – Jun 2023</p>
-              </div>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <div class="py-16 md:py-24">
+          <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Experience</span></h2>
+          <div class="mt-10 space-y-12 md:space-y-16">
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
+              <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Architected power, RX/TX, FPV, and PDB for <em>LawnDart</em> UAS targeting speed records. Firmware bring‑up on iNAV. Built a motor test stand (force sensor + laser RPM) to characterize max‑power operating envelopes.</p>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">CLASSE (CHESS/HMF Lab) — Electrical Engineer Intern</h3>
+              <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Integrated & validated five mission‑critical electrical systems; routed ~7,500 ft of sensor cabling; upgraded thermal/OK/radiation control chassis; engineered control‑panel workarounds to reuse legacy interfaces.</p>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell SciFi Lab — Research Assistant</h3>
+              <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Calibrated automated acoustic sensing rig with custom PCBs & Bluetooth modules; integrated a Python NN to classify exercise scalograms for a hands‑free workout assistant.</p>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell Biomedical Device — Product Dev & Media</h3>
+              <p class="mt-3 max-w-3xl text-base md:text-lg text-neutral-700 dark:text-neutral-300">Built wireless pump controller (ATtiny85 + HC‑08 + custom PCB). Led UX refresh & media; produced promo video reaching 5k+ viewers and boosted recruitment 25%.</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- PROJECTS -->
-      <section id="projects" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div class="py-16 md:py-24">
-            <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-amber">Projects</span></h2>
-            <div class="mt-10 space-y-8 md:space-y-10 text-base md:text-lg">
-              <p class="max-w-4xl"><span class="font-semibold">100V/150A UAV arming system:</span> pre‑charge + main contactor (Schaltbau), PCB integration, flyback protection; weight‑aware and field‑serviceable.</p>
-              <p class="max-w-4xl"><span class="font-semibold">DroneCAN ESC on CubePilot:</span> CAN wiring & parameterization; Mission Planner passthrough over WireGuard VPN for remote tuning.</p>
-              <p class="max-w-4xl"><span class="font-semibold">Multi‑camera voxel grid:</span> DepthAI + custom voxelizer with early‑frame rejection and calibration‑aware pipeline.</p>
-              <p class="max-w-4xl"><span class="font-semibold">Arduino/Teensy test stand:</span> non‑blocking PWM control, serial logging, and Plotly analysis; robust to timing jitter.</p>
+    <!-- EDUCATION -->
+    <section id="education" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <div class="py-16 md:py-24">
+          <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-orange">Education</span></h2>
+          <div class="mt-10 space-y-12">
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell University — B.S. Electrical & Computer Engineering</h3>
+              <p class="mt-3 text-base md:text-lg text-neutral-800 dark:text-neutral-200">Aerospace Engineering minor • Expected May 2027</p>
+              <p class="mt-2 max-w-4xl text-sm md:text-base text-neutral-700 dark:text-neutral-300">Relevant: Computer Architecture, Digital Logic & Comp Org, Intro Circuits, Microelectronics, Probability & Inference for Random Signals & Systems, Embedded Systems (FA25), Thermodynamics, Statics & Mechanics of Solids, Fluid Mechanics (FA25), Intro to Spaceflight Mechanics (FA25).</p>
+            </div>
+            <div>
+              <h3 class="font-display text-2xl md:text-4xl font-semibold">Phillips Exeter Academy</h3>
+              <p class="mt-3 text-base md:text-lg text-neutral-800 dark:text-neutral-200">Aug 2020 – Jun 2023</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- LEADERSHIP -->
-      <section id="leadership" class="section min-h-screen snap-start flex items-center bg-brand-tan/45 dark:bg-neutral-900">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div class="py-16 md:py-24">
-            <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Leadership</span></h2>
-            <div class="mt-10 space-y-10 text-base md:text-lg">
-              <p class="max-w-4xl"><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> launched 501(c)(3) campus chapter; built 7‑member exec + 12 mentors; coordinated hybrid events monthly.</p>
-              <p class="max-w-4xl"><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (3 yrs); Rowing Team Captain (2 yrs).</p>
-            </div>
+    <!-- PROJECTS -->
+    <section id="projects" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <div class="py-16 md:py-24">
+          <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-amber">Projects</span></h2>
+          <div class="mt-10 space-y-8 md:space-y-10 text-base md:text-lg">
+            <p class="max-w-4xl"><span class="font-semibold">100V/150A UAV arming system:</span> pre‑charge + main contactor (Schaltbau), PCB integration, flyback protection; weight‑aware and field‑serviceable.</p>
+            <p class="max-w-4xl"><span class="font-semibold">DroneCAN ESC on CubePilot:</span> CAN wiring & parameterization; Mission Planner passthrough over WireGuard VPN for remote tuning.</p>
+            <p class="max-w-4xl"><span class="font-semibold">Multi‑camera voxel grid:</span> DepthAI + custom voxelizer with early‑frame rejection and calibration‑aware pipeline.</p>
+            <p class="max-w-4xl"><span class="font-semibold">Arduino/Teensy test stand:</span> non‑blocking PWM control, serial logging, and Plotly analysis; robust to timing jitter.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- CONTACT -->
-      <section id="contact" class="section min-h-screen snap-start flex items-center bg-white dark:bg-neutral-950">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-          <div class="py-16 md:py-24">
-            <h2 class="font-display text-5xl md:text-7xl font-extrabold leading-tight">Let’s build something <span class="text-brand-orange">robust</span>.</h2>
-            <p class="mt-6 text-lg md:text-xl text-neutral-700 dark:text-neutral-300">Quickest way to reach me is email. I actually check it.</p>
-            <div class="mt-8 flex flex-wrap gap-4">
-              <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-6 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:opacity-90">Email me</a>
-              <a href="https://www.linkedin.com/in/wh474/" class="inline-flex items-center rounded-md px-6 py-3 ring-1 ring-neutral-300 dark:ring-neutral-700">LinkedIn</a>
-            </div>
+    <!-- LEADERSHIP -->
+    <section id="leadership" class="section min-h-screen flex items-center bg-brand-tan/45 dark:bg-neutral-900">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <div class="py-16 md:py-24">
+          <h2 class="font-display text-4xl md:text-6xl font-bold"><span class="text-brand-red">Leadership</span></h2>
+          <div class="mt-10 space-y-10 text-base md:text-lg">
+            <p class="max-w-4xl"><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> launched 501(c)(3) campus chapter; built 7‑member exec + 12 mentors; coordinated hybrid events monthly.</p>
+            <p class="max-w-4xl"><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (3 yrs); Rowing Team Captain (2 yrs).</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <footer class="py-8 text-center text-xs text-neutral-600 dark:text-neutral-400">
-        <p>© <span id="year"></span> Weiyi. Built on GitHub Pages.</p>
-      </footer>
-    </main>
+    <!-- CONTACT -->
+    <section id="contact" class="section min-h-screen flex items-center bg-white dark:bg-neutral-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+        <div class="py-16 md:py-24">
+          <h2 class="font-display text-5xl md:text-7xl font-extrabold leading-tight">Let’s build something <span class="text-brand-orange">robust</span>.</h2>
+          <p class="mt-6 text-lg md:text-xl text-neutral-700 dark:text-neutral-300">Quickest way to reach me is email. I actually check it.</p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-6 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:opacity-90">Email me</a>
+            <a href="https://www.linkedin.com/in/wh474/" class="inline-flex items-center rounded-md px-6 py-3 ring-1 ring-neutral-300 dark:ring-neutral-700">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- 3D model script -->
-    <script type="module">
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-      import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
-      import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
-
-      const canvas = document.getElementById('hero3d');
-      const hint = document.getElementById('modelHint');
-      const scene = new THREE.Scene();
-      scene.background = null;
-
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      const setSize = () => {
-        const el = canvas.parentElement || canvas;
-        const w = el.clientWidth || 800;
-        const h = el.clientHeight || 450;
-        renderer.setSize(w, h, false);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        camera.aspect = w / h; camera.updateProjectionMatrix();
-      };
-
-      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-      camera.position.set(2.8, 1.8, 3.2);
-
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true; controls.dampingFactor = 0.05;
-      controls.autoRotate = true; controls.autoRotateSpeed = 0.6;
-      controls.minDistance = 0.5; controls.maxDistance = 10;
-
-      scene.add(new THREE.HemisphereLight(0xffffff, 0x202020, 0.8));
-      const key = new THREE.DirectionalLight(0xffffff, 1.0); key.position.set(2, 4, 3); scene.add(key);
-      const rim = new THREE.DirectionalLight(0xffe0c0, 0.6); rim.position.set(-3, 2, -2); scene.add(rim);
-
-      const loader = new GLTFLoader();
-      function fitToView(object) {
-        const box = new THREE.Box3().setFromObject(object);
-        const size = box.getSize(new THREE.Vector3());
-        const center = box.getCenter(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const fitDist = maxDim / (2 * Math.tan((Math.PI * camera.fov) / 360));
-        const dir = new THREE.Vector3(1, 1, 1).normalize();
-        camera.position.copy(center.clone().add(dir.multiplyScalar(fitDist * 1.4)));
-        camera.near = maxDim / 100; camera.far = maxDim * 20; camera.updateProjectionMatrix();
-        controls.target.copy(center); controls.update();
-      }
-
-      (async () => {
-        try {
-          const gltf = await new Promise((resolve, reject) => {
-            loader.load('assets/Ready_Chain_2.glb', (g) => resolve(g), undefined, (err) => reject(err));
-          });
-          const model = gltf.scene; scene.add(model); fitToView(model);
-        } catch (e) {
-          console.error('GLB load failed:', e);
-          try {
-            const demo = await new Promise((resolve, reject) => {
-              loader.load('https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', (g) => resolve(g), undefined, reject);
-            });
-            const model = demo.scene; scene.add(model); fitToView(model);
-            hint.classList.remove('hidden');
-            hint.textContent = 'Loaded demo model. To use yours, upload assets/Ready_Chain_2.glb (ensure it\'s <100MB or use Git LFS).';
-          } catch (e2) {
-            console.error('Demo load failed:', e2);
-            hint.classList.remove('hidden');
-            hint.textContent = 'Could not load model. Ensure assets/Ready_Chain_2.glb exists and is under 100MB (or use Git LFS).';
-          }
-        }
-      })();
-
-      const animate = () => { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); };
-      animate();
-      window.addEventListener('resize', setSize, { passive: true });
-      setSize();
-    </script>
+    <footer class="py-8 text-center text-xs text-neutral-600 dark:text-neutral-400">
+      <p>© <span id="year"></span> Weiyi. Built on GitHub Pages.</p>
+    </footer>
 
     <script>
       const themeToggle = document.getElementById('themeToggle');
