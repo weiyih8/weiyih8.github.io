@@ -45,7 +45,7 @@
     <style>
       html { scroll-behavior: smooth; }
       html, body { overflow-x: hidden; }
-      .section { scroll-margin-top: 4rem; position: relative; overflow: visible; }
+      .section { scroll-margin-top: 4rem; position: relative; overflow: hidden; } /* Changed overflow */
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
       
@@ -57,12 +57,6 @@
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
-        /* EDIT: Reverted font-size to restore original horizontal width */
-        --vts: clamp(4rem, 10vw, 10rem);
-        /* EDIT: Reverted container width to restore original horizontal position */
-        --vt-strip: clamp(96px, 12vw, 164px);
-        /* EDIT: Applied a fixed upward shift for better visual centering */
-        --vt-shift: -2vh;
       }
       .dark {
         --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
@@ -80,14 +74,33 @@
       .pcb-a { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680"><rect width="100%" height="100%" fill="transparent"/><g stroke="%23FFA712" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.9"><path d="M20 60 L160 60 L200 100 L340 100 L380 60 L560 60 L600 100"/><path d="M40 300 L200 300 L260 240 L420 240 L480 300 L640 300"/><path d="M80 520 L260 520 L320 460 L520 460"/></g></svg>'); }
       .pcb-b { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="780" height="780" viewBox="0 0 780 780"><rect width="100%" height="100%" fill="transparent"/><g stroke="%23E76219" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.85"><path d="M760 120 L580 120 L540 160 L380 160 L340 120 L180 120 L140 160"/><path d="M720 360 L540 360 L480 420 L300 420 L240 360 L80 360"/></g></svg>'); }
       .pcb-c { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><rect width="100%" height="100%" fill="transparent"/><g stroke="%239CCFBF" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.8"><path d="M40 200 L220 200 L260 240 L440 240 L480 200 L680 200 L720 240"/><path d="M120 560 L320 560 L380 500 L580 500 L640 560 L840 560"/></g></svg>'); }
+      
+      /* REMOVED all .vtitle CSS */
 
-      .vtitle { position: absolute; top: 0; bottom: 0; width: var(--vt-strip); pointer-events: none; z-index: 1; }
-      .vtitle-left { left: 0; }
-      .vtitle-right { right: 0; }
-      .vtitle-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + var(--vt-shift))); }
-      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: -0.1em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
-      .vtitle-left .vtitle-inner span { transform: rotate(-90deg); }
-      .vtitle-right .vtitle-inner span { transform: rotate(90deg); }
+      /* ADDED: New styling for horizontal section titles */
+      .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        color: var(--vt);
+        font-size: clamp(3rem, 6vw, 5rem);
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+        position: relative;
+        width: max-content; /* Ensure underline does not stretch full width */
+      }
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        height: 3px;
+        width: 40%;
+        background-color: var(--vt);
+        transition: width 0.3s ease;
+      }
+      .section:hover .section-title::after {
+        width: 80%;
+      }
 
       .content { position: relative; z-index: 10; }
       .focus-card { background: rgba(255,255,255,.72); }
@@ -171,10 +184,12 @@
       </section>
 
       <section id="experience" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>EXPERIENCE</span></div></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28">
-            <div class="mt-2 space-y-10 md:space-y-14">
+          <div class="py-16 md:py-28 relative">
+            <div class="absolute top-16 md:top-28 right-0">
+              <h2 class="section-title text-right">Experience</h2>
+            </div>
+            <div class="mt-28 md:mt-32 space-y-10 md:space-y-14">
               <div>
                 <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
                 <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi leads the electrical architecture for <em>LawnDart</em>, a custom unmanned aircraft aimed at speed records. Responsibilities include high‑current power distribution (100V/150A), radio links (RX/TX), FPV integration, and safety interlocks. A custom motor test stand was designed with force sensing and laser tachometry to measure thrust, RPM, and efficiency maps. Firmware bring‑up on iNAV and PID tuning support high‑speed stability. Keywords: UAV, power electronics, ESC characterization, iNAV, PCB design, instrumentation, signal integrity.</p>
@@ -197,10 +212,12 @@
       </section>
 
       <section id="education" class="section sec-a min-h-screen flex items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>EDUCATION</span></div></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28 text-right">
-            <div class="mt-2 space-y-10 md:space-y-14 md:ml-auto md:max-w-4xl">
+          <div class="py-16 md:py-28 text-right relative">
+            <div class="absolute top-16 md:top-28 left-0">
+              <h2 class="section-title">Education</h2>
+            </div>
+            <div class="mt-28 md:mt-32 space-y-10 md:space-y-14 md:ml-auto md:max-w-4xl">
               <div>
                 <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell University — B.S. Electrical & Computer Engineering</h3>
                 <p class="mt-3 text-base md:text-lg">Aerospace Engineering minor • Expected May 2027</p>
@@ -216,36 +233,42 @@
       </section>
 
       <section id="projects" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>PROJECTS</span></div></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28">
-            <dl class="space-y-8 md:space-y-10 text-base md:text-lg max-w-4xl">
-              <div>
-                <dt class="font-semibold">100V/150A UAV arming system:</dt>
-                <dd class="mt-1 opacity-[0.92]">pre‑charge + main contactor (Schaltbau) path with flyback protection and compact PCB layout. Characterization included inrush control, thermal behavior, and SOA‑constrained component selection. Keywords: power electronics, contactors, pre‑charge, transient suppression, KiCad, test instrumentation.</dd>
-              </div>
-              <div>
-                <dt class="font-semibold">DroneCAN ESC on CubePilot:</dt>
-                <dd class="mt-1 opacity-[0.92]">CAN bus wiring/termination, parameter tuning for robust initialization, and Mission Planner passthrough over WireGuard VPN for remote telemetry and tuning. Keywords: UAVCAN/DroneCAN, ArduPilot, networking, telemetry, iptables, MTU, latency.</dd>
-              </div>
-              <div>
-                <dt class="font-semibold">Multi‑camera voxel grid:</dt>
-                <dd class="mt-1 opacity-[0.92]">DepthAI capture and calibration‑aware voxelizer with early‑frame rejection and exposure settling. Investigated single‑cone artifacts; corrected transform math for multi‑baseline consistency. Keywords: computer vision, 3D reconstruction, DepthAI, calibration, Python/C++.</dd>
-              </div>
-              <div>
-                 <dt class="font-semibold">Arduino/Teensy test stand:</dt>
-                 <dd class="mt-1 opacity-[0.92]">non‑blocking PWM, synchronized serial logging, and Python/Plotly analysis for repeatable thrust/electrical measurements. Keywords: embedded C/C++, microcontrollers, real‑time control, data acquisition.</dd>
-              </div>
-            </dl>
+          <div class="py-16 md:py-28 relative">
+            <div class="absolute top-16 md:top-28 right-0">
+              <h2 class="section-title text-right">Projects</h2>
+            </div>
+            <div class="mt-28 md:mt-32">
+              <dl class="space-y-8 md:space-y-10 text-base md:text-lg max-w-4xl">
+                <div>
+                  <dt class="font-semibold">100V/150A UAV arming system:</dt>
+                  <dd class="mt-1 opacity-[0.92]">pre‑charge + main contactor (Schaltbau) path with flyback protection and compact PCB layout. Characterization included inrush control, thermal behavior, and SOA‑constrained component selection. Keywords: power electronics, contactors, pre‑charge, transient suppression, KiCad, test instrumentation.</dd>
+                </div>
+                <div>
+                  <dt class="font-semibold">DroneCAN ESC on CubePilot:</dt>
+                  <dd class="mt-1 opacity-[0.92]">CAN bus wiring/termination, parameter tuning for robust initialization, and Mission Planner passthrough over WireGuard VPN for remote telemetry and tuning. Keywords: UAVCAN/DroneCAN, ArduPilot, networking, telemetry, iptables, MTU, latency.</dd>
+                </div>
+                <div>
+                  <dt class="font-semibold">Multi‑camera voxel grid:</dt>
+                  <dd class="mt-1 opacity-[0.92]">DepthAI capture and calibration‑aware voxelizer with early‑frame rejection and exposure settling. Investigated single‑cone artifacts; corrected transform math for multi‑baseline consistency. Keywords: computer vision, 3D reconstruction, DepthAI, calibration, Python/C++.</dd>
+                </div>
+                <div>
+                  <dt class="font-semibold">Arduino/Teensy test stand:</dt>
+                  <dd class="mt-1 opacity-[0.92]">non‑blocking PWM, synchronized serial logging, and Python/Plotly analysis for repeatable thrust/electrical measurements. Keywords: embedded C/C++, microcontrollers, real‑time control, data acquisition.</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="leadership" class="section sec-a min-h-screen flex items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>LEADERSHIP</span></div></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28 text-right">
-            <div class="mt-2 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl opacity-[0.92]">
+          <div class="py-16 md:py-28 text-right relative">
+             <div class="absolute top-16 md:top-28 left-0">
+              <h2 class="section-title">Leadership</h2>
+            </div>
+            <div class="mt-28 md:mt-32 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl opacity-[0.92]">
               <p><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> founded a 501(c)(3) campus chapter that connects under‑resourced students with application resources. Built a 7‑member exec team and a 12‑mentor cohort; organized monthly hybrid events; coordinated with the national organization and campus partners for venue, outreach, and impact tracking. Keywords: non‑profit, program management, team building, outreach, mentorship.</p>
               <p><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (three years); Rowing Team Captain (two years).</p>
             </div>
@@ -254,7 +277,6 @@
       </section>
 
       <section id="contact" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>CONTACT</span></div></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
           <div class="py-16 md:py-28 text-center">
             <h2 class="font-headline text-[12vw] md:text-8xl leading-none tracking-tight" style="color:var(--vt)">LET’S TALK</h2>
