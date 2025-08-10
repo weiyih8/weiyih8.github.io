@@ -45,7 +45,6 @@
     <style>
       html { scroll-behavior: smooth; }
       html, body { overflow-x: hidden; }
-      /* EDIT 4: Changed scroll-margin-top to 4rem to perfectly match the fixed header's height */
       .section { scroll-margin-top: 4rem; position: relative; overflow: visible; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
@@ -58,11 +57,11 @@
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
-        /* EDIT 2: Larger font size for vertical titles to fill more space */
-        --vts: clamp(8rem, 70vh, 70rem);
+        /* CORRECTED: Restored to a more balanced, but still larger, font size */
+        --vts: clamp(4rem, 10vw, 10rem);
         --vt-strip: clamp(96px, 12vw, 164px);
-        /* EDIT 2: Reset vertical shift for better centering with new large size */
-        --vt-shift: 0;
+        /* CORRECTED: Restored the original vertical shift for proper alignment */
+        --vt-shift: clamp(-6vh, 4vh, 10vh);
       }
       .dark {
         --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
