@@ -106,25 +106,16 @@
       }
 
       .content { position: relative; z-index: 10; }
-      .focus-card { background: rgba(255,255,255,.72); }
       .dark .focus-card { background: rgba(36, 34, 48, 0.7); border-color: rgba(255, 149, 0, 0.4); }
-      .dark .focus-card .focus-heading { color: var(--vt); }
 
       #interactive-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 0.25;
+        aspect-ratio: 1 / 1;
+        border-radius: 1rem;
         cursor: grab;
       }
-      #interactive-canvas:active {
+       #interactive-canvas:active {
         cursor: grabbing;
-      }
-      .dark #interactive-canvas {
-        opacity: 0.4;
       }
     </style>
   </head>
@@ -170,7 +161,6 @@
 
     <main class="relative z-10">
       <section id="home" class="section sec-a min-h-screen grid place-items-center">
-        <canvas id="interactive-canvas"></canvas>
         <div class="w-full pt-16 content">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div class="grid lg:grid-cols-12 gap-10 items-center">
@@ -189,15 +179,7 @@
                 </div>
               </div>
               <div class="lg:col-span-5">
-                <div class="focus-card rounded-2xl ring-1 ring-neutral-200/70 dark:ring-brand-mint/45 p-8">
-                  <p class="focus-heading text-sm uppercase tracking-wide opacity-90 font-display">Focus</p>
-                  <ul class="mt-3 space-y-2 text-base">
-                    <li>UAV power electronics • contactors • pre‑charge design</li>
-                    <li>Embedded C/C++ • Python • real‑time control • telemetry</li>
-                    <li>ArduPilot • CubePilot • UAVCAN/DroneCAN • Mission Planner</li>
-                    <li>Jetson & Raspberry Pi • computer vision • ML inference</li>
-                  </ul>
-                </div>
+                <canvas id="interactive-canvas"></canvas>
               </div>
             </div>
           </div>
@@ -316,68 +298,163 @@
     </footer>
     
     <script>
-      // This script handles all the standard UI like theme toggling, menus, etc.
       window.addEventListener('DOMContentLoaded', () => {
-        // ... (The entire UI script remains here, unchanged)
+        const root = document.documentElement;
+        
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          const sunIcon = themeToggle.querySelector('#sunIcon');
+          const moonIcon = themeToggle.querySelector('#moonIcon');
+          const storedTheme = localStorage.getItem('theme');
+
+          const applyTheme = (mode) => {
+            if (mode === 'dark') {
+              root.classList.add('dark');
+              if (sunIcon) sunIcon.classList.add('hidden');
+              if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+              root.classList.remove('dark');
+              if (sunIcon) sunIcon.classList.remove('hidden');
+              if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            localStorage.setItem('theme', mode);
+          };
+
+          themeToggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+          applyTheme(storedTheme || 'dark');
+        }
+
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+          const menuIcon = menuBtn.querySelector('#menuIcon');
+          const closeIcon = menuBtn.querySelector('#closeIcon');
+
+          menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            if (menuIcon) menuIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+          });
+          
+          document.querySelectorAll('#mobileMenu a').forEach(a => {
+            a.addEventListener('click', () => {
+              mobileMenu.classList.add('hidden');
+              if (menuIcon) menuIcon.classList.remove('hidden');
+              if (closeIcon) closeIcon.classList.add('hidden');
+            });
+          });
+        }
+
+        const la = document.querySelector('.pcb-a');
+        const lb = document.querySelector('.pcb-b');
+        const lc = document.querySelector('.pcb-c');
+        if (la && lb && lc) {
+            let y = 0, ticking = false;
+            const onScroll = () => {
+              y = window.scrollY;
+              if (!ticking) {
+                requestAnimationFrame(() => {
+                  la.style.transform = `translate3d(0, ${-y * 0.06}px, 0)`;
+                  lb.style.transform = `translate3d(0, ${-y * 0.11}px, 0)`;
+                  lc.style.transform = `translate3d(0, ${-y * 0.18}px, 0)`;
+                  ticking = false;
+                });
+                ticking = true;
+              }
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+
+        const sections = document.querySelectorAll('section.section');
+        const navLinks = document.querySelectorAll('header nav a');
+        if (sections.length > 0 && navLinks.length > 0) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('nav-active');
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('nav-active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-40% 0px -60% 0px' });
+            sections.forEach(section => observer.observe(section));
+        }
+
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+          const currentYear = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            timeZone: 'America/Los_Angeles',
+          }).format(new Date());
+          yearEl.textContent = currentYear;
+        }
       });
     </script>
     
     <script type="module">
         import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
         import { GLTFLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
-        // If your final model is Draco compressed, you will need this.
-        // import { DRACOLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
+        // UNCOMMENTED: DracoLoader is required for the 'Littlest Tokyo' model.
+        import { DRACOLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
 
         const canvas = document.getElementById('interactive-canvas');
         if (canvas) {
             // === Scene Setup ===
             const scene = new THREE.Scene();
             const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.outputColorSpace = THREE.SRGBColorSpace;
-            const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
+            
+            const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            // CHANGED: Camera position for the larger Tokyo scene
+            camera.position.set(0, 2, 12);
+            camera.lookAt(0, 0, 0);
 
             // === Lighting ===
-            const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.7);
+            const ambientLight = new THREE.AmbientLight(0xFFFFFF, 2.0); // Increased intensity for the scene
             scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            directionalLight.position.set(5, 5, 5);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 3.0); // Increased intensity
+            directionalLight.position.set(10, 15, 10);
             scene.add(directionalLight);
             
             // === Model Loading ===
             const loader = new GLTFLoader();
             let model;
 
-            // --- Draco Loader Setup (Optional) ---
-            // If your final .glb file is compressed, uncomment these lines.
-            // const dracoLoader = new DRACOLoader();
-            // dracoLoader.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/gltf/');
-            // loader.setDRACOLoader(dracoLoader);
+            // --- Draco Loader Setup ---
+            // UNCOMMENTED: This is necessary to decompress the model
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/gltf/');
+            loader.setDRACOLoader(dracoLoader);
             
             loader.load(
-                'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/Gear.glb',
+                // CHANGED: Model URL to Littlest Tokyo
+                'https://threejs.org/examples/models/gltf/LittlestTokyo.glb',
                 (gltf) => { 
-                    model = gltf.scene; 
-                    model.scale.set(0.6, 0.6, 0.6); 
+                    model = gltf.scene;
+                    // CHANGED: Scale and position for the new model
+                    model.scale.set(0.012, 0.012, 0.012); 
+                    model.position.y = -1.5;
                     scene.add(model); 
                 },
-                (xhr) => { console.log(`Loading model: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`); },
+                (xhr) => { console.log(`Loading scene: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`); },
                 (error) => { console.error('An error happened while loading the model:', error); }
             );
 
             // === Interaction & State Logic ===
             let autoRotate = true;
             let inactivityTimer = null;
-            const inactivityTimeout = 4000; // 4 seconds
-
+            const inactivityTimeout = 5000;
             let isMouseDown = false;
             let previousMousePosition = { x: 0, y: 0 };
-            
             let rotationalVelocity = { x: 0, y: 0 };
-            const dampingFactor = 0.95; // Friction effect
-            const velocityThreshold = 0.0001; // How slow it must be to be considered "stopped"
+            const dampingFactor = 0.95;
+            const velocityThreshold = 0.0001;
             
             canvas.addEventListener('mousedown', (e) => {
                 isMouseDown = true;
@@ -391,66 +468,55 @@
             canvas.addEventListener('mousemove', (e) => {
                 if (!isMouseDown || !model) return;
                 const deltaMove = { x: e.clientX - previousMousePosition.x, y: e.clientY - previousMousePosition.y };
-                const rotationSpeed = 0.007; // How sensitive the drag is
-                
-                // Directly apply rotation while dragging
+                const rotationSpeed = 0.007;
                 model.rotation.y += deltaMove.x * rotationSpeed;
-                model.rotation.x += deltaMove.y * rotationSpeed;
-                
-                // Store the last movement speed to use as inertia
+                const newRotationX = model.rotation.x + deltaMove.y * rotationSpeed;
+                // Limit vertical rotation to feel more natural for a city scene
+                if (Math.abs(newRotationX) < Math.PI / 4) {
+                    model.rotation.x = newRotationX;
+                }
                 rotationalVelocity.y = deltaMove.x * rotationSpeed;
                 rotationalVelocity.x = deltaMove.y * rotationSpeed;
-                
                 previousMousePosition = { x: e.clientX, y: e.clientY };
             });
 
-            window.addEventListener('mouseup', () => {
-                isMouseDown = false;
-                // The timer to resume auto-rotation will now start in the animate loop
-                // once the model has finished coasting to a stop.
-            });
+            window.addEventListener('mouseup', () => { isMouseDown = false; });
 
-            // === Animation Loop (The State Machine) ===
+            // === Animation Loop & Resizing ===
             const clock = new THREE.Clock();
             function animate() {
                 requestAnimationFrame(animate);
 
+                const container = canvas.parentElement;
+                if (container.clientWidth > 0 && (renderer.domElement.width !== container.clientWidth || renderer.domElement.height !== container.clientHeight)) {
+                    renderer.setSize(container.clientWidth, container.clientHeight, false);
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                }
+
                 if (model) {
                     const isCoasting = Math.abs(rotationalVelocity.y) > velocityThreshold || Math.abs(rotationalVelocity.x) > velocityThreshold;
-
                     if (!isMouseDown && isCoasting) {
-                        // STATE: COASTING - Apply inertia and friction
                         model.rotation.y += rotationalVelocity.y;
                         model.rotation.x += rotationalVelocity.x;
                         rotationalVelocity.y *= dampingFactor;
                         rotationalVelocity.x *= dampingFactor;
                     } else if (!isMouseDown && !isCoasting) {
-                        // STATE: STOPPED - Clamp velocity and manage auto-rotation timer
                         rotationalVelocity = { x: 0, y: 0 };
-
                         if (!inactivityTimer && !autoRotate) {
                             inactivityTimer = setTimeout(() => {
                                 autoRotate = true;
                                 inactivityTimer = null;
                             }, inactivityTimeout);
                         }
-                        
                         if (autoRotate) {
-                            model.rotation.y += clock.getDelta() * 0.2; // Gentle auto-rotation
+                            model.rotation.y += clock.getDelta() * 0.05; // Gentle auto-rotation for the scene
                         }
                     }
                 }
-                
                 renderer.render(scene, camera);
             }
             animate();
-
-            // === Handle Window Resizing ===
-            window.addEventListener('resize', () => {
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-            });
         }
     </script>
   </body>
