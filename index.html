@@ -38,23 +38,29 @@
 
     <style>
       html { scroll-behavior: smooth; }
-      .section { scroll-margin-top: 5.2rem; position: relative; }
+      .section { scroll-margin-top: 5.2rem; position: relative; overflow: visible; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
 
-      /* Two-shade scheme via CSS variables */
-      :root { --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C; }
-      .dark { --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3; }
+      /* Two-shade scheme via CSS variables (plus translucent "veil" so parallax shows through) */
+      :root {
+        --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
+        --sec-a-veil: rgba(234,220,197,0.88); --sec-b-veil: rgba(217,195,166,0.88);
+      }
+      .dark {
+        --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
+        --sec-a-veil: rgba(15,27,43,0.86); --sec-b-veil: rgba(11,19,32,0.86);
+      }
       body { background: var(--sec-a); color: var(--text); }
-      .sec-a { background: var(--sec-a); }
-      .sec-b { background: var(--sec-b); }
+      .sec-a { background: var(--sec-a-veil); }
+      .sec-b { background: var(--sec-b-veil); }
 
       /* Parallax background: three varied layers */
       .pcb-layer { position: fixed; inset: -10vh 0; pointer-events: none; z-index: 0; background-repeat: repeat; will-change: transform; }
-      .pcb-a { background-size: 680px 680px; opacity: .10; transform: rotate(0.6deg); }
-      .pcb-b { background-size: 780px 780px; opacity: .09; transform: rotate(-0.8deg); }
-      .pcb-c { background-size: 900px 900px; opacity: .08; transform: rotate(1.2deg); }
-      .dark .pcb-a { opacity: .14; } .dark .pcb-b { opacity: .12; } .dark .pcb-c { opacity: .11; }
+      .pcb-a { background-size: 680px 680px; opacity: .12; transform: rotate(0.6deg); }
+      .pcb-b { background-size: 780px 780px; opacity: .10; transform: rotate(-0.8deg); }
+      .pcb-c { background-size: 900px 900px; opacity: .09; transform: rotate(1.2deg); }
+      .dark .pcb-a { opacity: .16; } .dark .pcb-b { opacity: .14; } .dark .pcb-c { opacity: .12; }
       .pcb-a { background-image: url('data:image/svg+xml;utf8,\
         <svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680">\
           <rect width="100%" height="100%" fill="transparent"/>\
@@ -75,24 +81,29 @@
       .pcb-c { background-image: url('data:image/svg+xml;utf8,\
         <svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">\
           <rect width="100%" height="100%" fill="transparent"/>\
-          <g stroke="%239CCFBF" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.65">\
+          <g stroke="%239CCFBF" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.65">\
             <path d="M40 200 L220 200 L260 240 L440 240 L480 200 L680 200 L720 240"/>\
             <path d="M120 560 L320 560 L380 500 L580 500 L640 560 L840 560"/>\
           </g>\
         </svg>'); }
 
-      /* Vertical, oversized titles behind content */
-      :root { --vtw: clamp(14rem, 22vw, 28rem); --vts: clamp(8rem, 18vh, 22rem); }
+      /* Vertical, oversized titles behind content — alignment fixes */
+      :root { --vts: clamp(6rem, 18vh, 22rem); }
       .vtitle { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
       .vtitle-inner { position: absolute; top: 50%; transform: translateY(-50%); white-space: nowrap; }
       .vtitle-inner span { font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: .04em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; }
-      /* Left titles: sit entirely on-screen */
-      .vtitle-left .vtitle-inner { left: max(1.5rem, 2vw); transform-origin: left center; transform: translateY(-50%) rotate(-90deg); }
-      /* Right titles */
-      .vtitle-right .vtitle-inner { right: max(1.5rem, 2vw); transform-origin: right center; transform: translateY(-50%) rotate(90deg); }
+      /* Left titles: fully on-screen */
+      .vtitle-left .vtitle-inner { left: 0; transform-origin: left center; transform: translate(2.5rem, -50%) rotate(-90deg); }
+      /* Right titles: fully on-screen */
+      .vtitle-right .vtitle-inner { right: 0; transform-origin: right center; transform: translate(-2.5rem, -50%) rotate(90deg); }
 
       /* Ensure content overlays titles */
       .content { position: relative; z-index: 10; }
+
+      /* Focus card color (dark mode: full color, not grey) */
+      .focus-card { background: rgba(255,255,255,.65); }
+      .dark .focus-card { background: #173448; /* deep teal */ border-color: rgba(156,207,191,0.35); }
+      .dark .focus-card .focus-heading { color: var(--vt); }
     </style>
   </head>
 
@@ -154,8 +165,8 @@
             </div>
             <div class="lg:col-span-5">
               <!-- Focus card: dark-mode colored -->
-              <div class="rounded-2xl ring-1 ring-neutral-200/70 dark:ring-brand-mint/30 p-8" style="background:rgba(255,255,255,.65);">
-                <p class="text-sm uppercase tracking-wide opacity-80 font-display dark:text-brand-mint">Focus</p>
+              <div class="focus-card rounded-2xl ring-1 ring-neutral-200/70 dark:ring-brand-mint/30 p-8">
+                <p class="focus-heading text-sm uppercase tracking-wide opacity-90 font-display">Focus</p>
                 <ul class="mt-3 space-y-2 text-base">
                   <li>UAV power electronics • contactors • pre‑charge design</li>
                   <li>Embedded C/C++ • Python • real‑time control • telemetry</li>
