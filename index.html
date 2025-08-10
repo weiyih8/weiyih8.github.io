@@ -42,10 +42,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
     <style>
       html { scroll-behavior: smooth; }
       html, body { overflow-x: hidden; }
@@ -111,7 +107,7 @@
 
       .content { position: relative; z-index: 10; }
       .focus-card { background: rgba(255,255,255,.72); }
-      .dark .focus-card { background: #173448; border-color: rgba(156,207,191,0.45); }
+      .dark .focus-card { background: rgba(23, 26, 48, 0.7); border-color: rgba(255, 149, 0, 0.4); } /* Adjusted for new dark theme */
       .dark .focus-card .focus-heading { color: var(--vt); }
 
       #bg-canvas {
@@ -121,11 +117,10 @@
         width: 100%;
         height: 100%;
         z-index: 1;
-        /* EDITED: Increased opacity to make the model more visible */
-        opacity: 0.5;
+        opacity: 0.25; /* Subtle opacity for light mode */
       }
       .dark #bg-canvas {
-        opacity: 0.7;
+        opacity: 0.4; /* Slightly more visible in dark mode */
       }
     </style>
   </head>
@@ -315,19 +310,113 @@
     <footer class="py-8 text-center text-xs opacity-90 relative z-10">
       <p>© <span id="year"></span> Weiyi Huang — Content licensed under <a class="underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.</p>
     </footer>
-
-    <script>
-      // Regular script block for theme toggle, menu, etc.
-      // (This is kept separate from the `three.js` script)
-      // ... same script as before ...
-    </script>
     
     <script>
-      (() => {
-        // --- Scene Setup ---
-        const canvas = document.querySelector('#bg-canvas');
-        if (!canvas) return; // Don't run if the canvas is not on the page
+      window.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
         
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          const sunIcon = themeToggle.querySelector('#sunIcon');
+          const moonIcon = themeToggle.querySelector('#moonIcon');
+          const storedTheme = localStorage.getItem('theme');
+
+          const applyTheme = (mode) => {
+            if (mode === 'dark') {
+              root.classList.add('dark');
+              if (sunIcon) sunIcon.classList.add('hidden');
+              if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+              root.classList.remove('dark');
+              if (sunIcon) sunIcon.classList.remove('hidden');
+              if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            localStorage.setItem('theme', mode);
+          };
+
+          themeToggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+          applyTheme(storedTheme || 'dark');
+        }
+
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+          const menuIcon = menuBtn.querySelector('#menuIcon');
+          const closeIcon = menuBtn.querySelector('#closeIcon');
+
+          menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            if (menuIcon) menuIcon.classList.toggle('hidden', !isHidden);
+            if (closeIcon) closeIcon.classList.toggle('hidden', isHidden);
+          });
+          
+          document.querySelectorAll('#mobileMenu a').forEach(a => {
+            a.addEventListener('click', () => {
+              mobileMenu.classList.add('hidden');
+              if (menuIcon) menuIcon.classList.remove('hidden');
+              if (closeIcon) closeIcon.classList.add('hidden');
+            });
+          });
+        }
+
+        const la = document.querySelector('.pcb-a');
+        const lb = document.querySelector('.pcb-b');
+        const lc = document.querySelector('.pcb-c');
+        if (la && lb && lc) {
+            let y = 0, ticking = false;
+            const onScroll = () => {
+              y = window.scrollY;
+              if (!ticking) {
+                requestAnimationFrame(() => {
+                  la.style.transform = `translate3d(0, ${-y * 0.06}px, 0)`;
+                  lb.style.transform = `translate3d(0, ${-y * 0.11}px, 0)`;
+                  lc.style.transform = `translate3d(0, ${-y * 0.18}px, 0)`;
+                  ticking = false;
+                });
+                ticking = true;
+              }
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+
+        const sections = document.querySelectorAll('section.section');
+        const navLinks = document.querySelectorAll('header nav a');
+        if (sections.length > 0 && navLinks.length > 0) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('nav-active');
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('nav-active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-40% 0px -60% 0px' });
+            sections.forEach(section => observer.observe(section));
+        }
+
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+          const currentYear = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            timeZone: 'America/Los_Angeles',
+          }).format(new Date());
+          yearEl.textContent = currentYear;
+        }
+      });
+    </script>
+    
+    <script type="module">
+      import * as THREE from 'https://cdn.skypack.dev/three@0.132.2';
+      import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/GLTFLoader.js';
+      import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+
+      const canvas = document.querySelector('#bg-canvas');
+      if (canvas) {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 5;
@@ -336,15 +425,13 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // --- Lighting ---
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
 
-        // --- Controls ---
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.enableZoom = false;
         controls.enablePan = false;
@@ -353,9 +440,8 @@
         controls.addEventListener('start', () => { isUserInteracting = true; });
         controls.addEventListener('end', () => { isUserInteracting = false; });
 
-        // --- Model Loading ---
         let model;
-        const loader = new THREE.GLTFLoader();
+        const loader = new GLTFLoader();
         const modelUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/Gear.glb';
         
         loader.load(modelUrl, (gltf) => {
@@ -366,14 +452,12 @@
           console.error('An error happened while loading the model:', error);
         });
 
-        // --- Responsiveness ---
         window.addEventListener('resize', () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- Animation Loop ---
         function animate() {
           requestAnimationFrame(animate);
           if (model && !isUserInteracting) {
@@ -384,7 +468,7 @@
           renderer.render(scene, camera);
         }
         animate();
-      })();
+      }
     </script>
   </body>
 </html>
