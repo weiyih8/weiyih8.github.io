@@ -57,10 +57,10 @@
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
-        /* EDIT: Increased font size and container width to make titles appear wider/stretched */
         --vts: clamp(4rem, 11vw, 11rem);
         --vt-strip: clamp(100px, 13vw, 180px);
-        --vt-shift: clamp(-6vh, 4vh, 10vh);
+        /* EDIT: Set to 0 to perfectly center the titles in their sections */
+        --vt-shift: 0;
       }
       .dark {
         --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
@@ -83,8 +83,8 @@
       .vtitle-left { left: 0; }
       .vtitle-right { right: 0; }
       .vtitle-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + var(--vt-shift))); }
-      /* EDIT: Reduced letter-spacing to make the titles vertically shorter */
-      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: 0em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
+      /* EDIT: Set negative letter-spacing to compress titles vertically by ~20% */
+      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: -0.1em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
       .vtitle-left .vtitle-inner span { transform: rotate(-90deg); }
       .vtitle-right .vtitle-inner span { transform: rotate(90deg); }
 
