@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Weiyi Huang | ECE • UAV Systems • AI</title>
 
-    <!-- Tailwind via CDN -->
+    <meta name="description" content="Weiyi Huang's portfolio. An Electrical & Computer Engineering student at Cornell specializing in UAV systems, power electronics, embedded systems, and applied AI." />
+    <meta name="keywords" content="Weiyi Huang, Electrical Engineering, Computer Engineering, ECE, Cornell, UAV, Drone, AI, Embedded Systems, Robotics, Power Electronics" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Weiyi Huang | ECE • UAV Systems • AI" />
+    <meta property="og:description" content="Reliable autonomy, built end‑to‑end. Explore Weiyi's work in UAV systems, power electronics, and applied AI." />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1612432599793-faf2d50d5a3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" />
+    <meta property="og:url" content="https://your-domain.com" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -33,7 +40,6 @@
       }
     </script>
 
-    <!-- Fonts (square / assertive) -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <style>
@@ -43,6 +49,12 @@
       .section { scroll-margin-top: 5.2rem; position: relative; overflow: visible; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
+      
+      /* Style for active nav link (Added) */
+      .nav-active {
+        color: var(--vt);
+        background-size: 100% 2px !important;
+      }
 
       /* === Two-shade scheme (light & dark via CSS variables) === */
       :root {
@@ -50,7 +62,7 @@
         /* lighter veils so parallax shows */
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
         /* vertical title sizing */
-        --vts: clamp(2.6rem, 9vh, 9rem);     /* text size (shorter vertically) */
+        --vts: clamp(2.6rem, 9vh, 9rem);      /* text size (shorter vertically) */
         --vt-strip: clamp(96px, 12vw, 164px); /* fixed side strip width to avoid overflow */
         --vt-shift: clamp(-6vh, 4vh, 10vh);   /* fine tune vertical shift per section */
       }
@@ -65,241 +77,4 @@
       /* === Parallax background: three varied layers (slightly stronger) === */
       .pcb-layer { position: fixed; inset: -10vh 0; pointer-events: none; z-index: 0; background-repeat: repeat; will-change: transform; }
       .pcb-a { background-size: 680px 680px; opacity: .46; transform: rotate(0.6deg); }
-      .pcb-b { background-size: 780px 780px; opacity: .36; transform: rotate(-0.8deg); }
-      .pcb-c { background-size: 900px 900px; opacity: .28; transform: rotate(1.2deg); }
-      .dark .pcb-a { opacity: .50; } .dark .pcb-b { opacity: .40; } .dark .pcb-c { opacity: .32; }
-      /* SVG patterns */
-      .pcb-a { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680"><rect width="100%" height="100%" fill="transparent"/><g stroke="%23FFA712" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.9"><path d="M20 60 L160 60 L200 100 L340 100 L380 60 L560 60 L600 100"/><path d="M40 300 L200 300 L260 240 L420 240 L480 300 L640 300"/><path d="M80 520 L260 520 L320 460 L520 460"/></g></svg>'); }
-      .pcb-b { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="780" height="780" viewBox="0 0 780 780"><rect width="100%" height="100%" fill="transparent"/><g stroke="%23E76219" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.85"><path d="M760 120 L580 120 L540 160 L380 160 L340 120 L180 120 L140 160"/><path d="M720 360 L540 360 L480 420 L300 420 L240 360 L80 360"/></g></svg>'); }
-      .pcb-c { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><rect width="100%" height="100%" fill="transparent"/><g stroke="%239CCFBF" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.8"><path d="M40 200 L220 200 L260 240 L440 240 L480 200 L680 200 L720 240"/><path d="M120 560 L320 560 L380 500 L580 500 L640 560 L840 560"/></g></svg>'); }
-
-      /* === Vertical titles — overflow-proof side strips === */
-      .vtitle { position: absolute; top: 0; bottom: 0; width: var(--vt-strip); pointer-events: none; z-index: 1; }
-      .vtitle-left { left: 0; }
-      .vtitle-right { right: 0; }
-      .vtitle-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + var(--vt-shift))); }
-      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: .04em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
-      .vtitle-left .vtitle-inner span { transform: rotate(-90deg); }
-      .vtitle-right .vtitle-inner span { transform: rotate(90deg); }
-
-      /* Content sits above titles */
-      .content { position: relative; z-index: 10; }
-
-      /* Focus card color (dark mode: full color, not grey) */
-      .focus-card { background: rgba(255,255,255,.72); }
-      .dark .focus-card { background: #173448; border-color: rgba(156,207,191,0.45); }
-      .dark .focus-card .focus-heading { color: var(--vt); }
-    </style>
-  </head>
-
-  <body class="font-body relative">
-    <!-- Parallax background layers -->
-    <div class="pcb-layer pcb-a"></div>
-    <div class="pcb-layer pcb-b"></div>
-    <div class="pcb-layer pcb-c"></div>
-
-    <!-- Top accent bar -->
-    <div class="h-1 w-full bg-gradient-to-r from-brand-amber via-brand-orange to-brand-amber relative z-10"></div>
-
-    <!-- Header -->
-    <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-nightA/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#home" class="font-display font-extrabold tracking-tight text-2xl md:text-3xl lg:text-4xl">Weiyi Huang</a>
-        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px]">
-          <a href="#experience" class="hover:underline underline-link">Experience</a>
-          <a href="#education" class="hover:underline underline-link">Education</a>
-          <a href="#projects" class="hover:underline underline-link">Projects</a>
-          <a href="#leadership" class="hover:underline underline-link">Leadership</a>
-          <a href="#contact" class="hover:underline underline-link">Contact</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <button id="themeToggle" class="px-3 py-1.5 text-sm rounded-md border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100/60 dark:hover:bg-white/5" aria-label="Toggle theme">Dark</button>
-          <button id="menuBtn" class="md:hidden p-2 rounded border border-neutral-300 dark:border-neutral-700" aria-label="Open menu">☰</button>
-        </div>
-      </div>
-      <div id="mobileMenu" class="md:hidden hidden border-t border-neutral-200 dark:border-neutral-800">
-        <nav class="px-4 py-3 flex flex-col gap-2 text-base" style="background:var(--sec-a)">
-          <a href="#experience" class="py-2">Experience</a>
-          <a href="#education" class="py-2">Education</a>
-          <a href="#projects" class="py-2">Projects</a>
-          <a href="#leadership" class="py-2">Leadership</a>
-          <a href="#contact" class="py-2">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="relative z-10">
-      <!-- HERO (sec-a) -->
-      <section id="home" class="section sec-a min-h-screen grid place-items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>HOME</span></div></div>
-        <div class="w-full pt-16 content">
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div class="grid lg:grid-cols-12 gap-10 items-center">
-              <div class="lg:col-span-7">
-                <h1 class="font-headline font-extrabold tracking-tight text-5xl md:text-7xl leading-[0.95]">
-                  Reliable autonomy, <span class="text-brand-amber">built</span> end‑to‑end.
-                </h1>
-                <p class="mt-6 text-lg md:text-xl max-w-prose opacity-[0.9] font-body">
-                  Weiyi Huang is an Electrical & Computer Engineering student specializing in UAV systems, embedded systems, and applied AI. Work includes 100V/150A power electronics, CAN bus (UAVCAN/DroneCAN) integration with ArduPilot, and multi‑camera perception pipelines for reliable autonomy.
-                </p>
-                <div class="mt-8 flex flex-wrap gap-4 text-sm">
-                  <a href="#experience" class="underline-link">Experience ↓</a>
-                  <a href="#education" class="underline-link">Education ↓</a>
-                  <a href="#projects" class="underline-link">Projects ↓</a>
-                  <a href="#contact" class="underline-link">Contact ↓</a>
-                </div>
-              </div>
-              <div class="lg:col-span-5">
-                <div class="focus-card rounded-2xl ring-1 ring-neutral-200/70 dark:ring-brand-mint/45 p-8">
-                  <p class="focus-heading text-sm uppercase tracking-wide opacity-90 font-display">Focus</p>
-                  <ul class="mt-3 space-y-2 text-base">
-                    <li>UAV power electronics • contactors • pre‑charge design</li>
-                    <li>Embedded C/C++ • Python • real‑time control • telemetry</li>
-                    <li>ArduPilot • CubePilot • UAVCAN/DroneCAN • Mission Planner</li>
-                    <li>Jetson & Raspberry Pi • computer vision • ML inference</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EXPERIENCE (sec-b / title right) -->
-      <section id="experience" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>EXPERIENCE</span></div></div>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28">
-            <div class="mt-2 space-y-10 md:space-y-14">
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
-                <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi leads the electrical architecture for <em>LawnDart</em>, a custom unmanned aircraft aimed at speed records. Responsibilities include high‑current power distribution (100V/150A), radio links (RX/TX), FPV integration, and safety interlocks. A custom motor test stand was designed with force sensing and laser tachometry to measure thrust, RPM, and efficiency maps. Firmware bring‑up on iNAV and PID tuning support high‑speed stability. Keywords: UAV, power electronics, ESC characterization, iNAV, PCB design, instrumentation, signal integrity.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">CLASSE (CHESS/HMF Lab) — Electrical Engineer Intern</h3>
-                <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">At Cornell’s Laboratory for Accelerator‑Based Sciences and Education, Weiyi commissioned and validated five mission‑critical electrical systems for the HMF lab. The work involved routing ~7,500 ft of sensor/control cabling with labeling and strain‑relief standards; upgrading thermal, OK, and radiation‑monitor control chassis; and crafting interface workarounds to preserve legacy panels. Procedures were authored for continuity checks, fail‑safe verification, and acceptance testing across mechanical, radiation safety, and controls. Keywords: commissioning, controls, wiring harness, diagnostics, reliability engineering.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell SciFi Lab — Research Assistant</h3>
-                <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi developed and calibrated an automated acoustic sensing rig with custom PCBs and Bluetooth modules, then integrated a Python‑based neural network to classify exercise scalograms. The pipeline covered data acquisition, preprocessing, model training, and real‑time inference constraints. Keywords: embedded ML, DSP, feature extraction, Bluetooth, PCB fabrication, Python, PyTorch.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell Biomedical Device — Product Dev & Media</h3>
-                <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi prototyped a wireless pump controller (ATtiny85 + HC‑08 + custom PCB) and iterated enclosure UX for serviceability. He refreshed the team site and recruitment pipeline, producing a promo video (>5k views) that increased applications by ~25%. Keywords: microcontrollers, UART/BLE, human‑factors, rapid prototyping, documentation, media production.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EDUCATION (sec-a / title left) -->
-      <section id="education" class="section sec-a min-h-screen flex items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>EDUCATION</span></div></div>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28 text-right">
-            <div class="mt-2 space-y-10 md:space-y-14 md:ml-auto md:max-w-4xl">
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell University — B.S. Electrical & Computer Engineering</h3>
-                <p class="mt-3 text-base md:text-lg">Aerospace Engineering minor • Expected May 2027</p>
-                <p class="mt-2 text-sm md:text-base opacity-[0.92]">Relevant coursework: Computer Architecture; Digital Logic & Computer Organization; Intro Circuits; Microelectronics; Probability & Inference for Random Signals & Systems; Embedded Systems (FA25); Thermodynamics; Statics & Mechanics of Solids; Fluid Mechanics (FA25); Intro to Spaceflight Mechanics (FA25). Keywords: RTL/Verilog, embedded systems, control systems, signal processing, estimation, aerodynamics.</p>
-              </div>
-              <div>
-                <h3 class="font-display text-2xl md:text-4xl font-semibold">Phillips Exeter Academy</h3>
-                <p class="mt-3 text-base md:text-lg">Aug 2020 – Jun 2023</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROJECTS (sec-b / title right) -->
-      <section id="projects" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>PROJECTS</span></div></div>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28">
-            <div class="mt-2 space-y-8 md:space-y-10 text-base md:text-lg max-w-4xl">
-              <p><span class="font-semibold">100V/150A UAV arming system:</span> pre‑charge + main contactor (Schaltbau) path with flyback protection and compact PCB layout. Characterization included inrush control, thermal behavior, and SOA‑constrained component selection. Keywords: power electronics, contactors, pre‑charge, transient suppression, KiCad, test instrumentation.</p>
-              <p><span class="font-semibold">DroneCAN ESC on CubePilot:</span> CAN bus wiring/termination, parameter tuning for robust initialization, and Mission Planner passthrough over WireGuard VPN for remote telemetry and tuning. Keywords: UAVCAN/DroneCAN, ArduPilot, networking, telemetry, iptables, MTU, latency.</p>
-              <p><span class="font-semibold">Multi‑camera voxel grid:</span> DepthAI capture and calibration‑aware voxelizer with early‑frame rejection and exposure settling. Investigated single‑cone artifacts; corrected transform math for multi‑baseline consistency. Keywords: computer vision, 3D reconstruction, DepthAI, calibration, Python/C++.</p>
-              <p><span class="font-semibold">Arduino/Teensy test stand:</span> non‑blocking PWM, synchronized serial logging, and Python/Plotly analysis for repeatable thrust/electrical measurements. Keywords: embedded C/C++, microcontrollers, real‑time control, data acquisition.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- LEADERSHIP (sec-a / title left) -->
-      <section id="leadership" class="section sec-a min-h-screen flex items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>LEADERSHIP</span></div></div>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28 text-right">
-            <div class="mt-2 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl">
-              <p><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> founded a 501(c)(3) campus chapter that connects under‑resourced students with application resources. Built a 7‑member exec team and a 12‑mentor cohort; organized monthly hybrid events; coordinated with the national organization and campus partners for venue, outreach, and impact tracking. Keywords: non‑profit, program management, team building, outreach, mentorship.</p>
-              <p><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (three years); Rowing Team Captain (two years).</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT (sec-b / title right) -->
-      <section id="contact" class="section sec-b min-h-screen flex items-center">
-        <div class="vtitle vtitle-right"><div class="vtitle-inner"><span>CONTACT</span></div></div>
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
-          <div class="py-16 md:py-28 text-center">
-            <h2 class="font-headline text-[12vw] md:text-8xl leading-none tracking-tight" style="color:var(--vt)">LET’S TALK</h2>
-            <p class="mt-6 text-lg md:text-xl">Fastest response via email.</p>
-            <div class="mt-8 flex flex-wrap gap-4 justify-center">
-              <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-6 py-3 bg-[var(--vt)] text-black hover:opacity-90">Email me</a>
-              <a href="https://www.linkedin.com/in/wh474/" class="inline-flex items-center rounded-md px-6 py-3 ring-1 ring-neutral-500">LinkedIn</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="py-8 text-center text-xs opacity-90 relative z-10">
-      <p>© <span id="year"></span> Wayne Works: Applied Sciences Division — Content licensed under <a class="underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
-    </footer>
-
-    <script>
-      // Theme toggle
-      window.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('themeToggle');
-        const root = document.documentElement;
-        const stored = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        function apply(mode){ if(mode==='dark'){root.classList.add('dark'); themeToggle.textContent='Light';} else {root.classList.remove('dark'); themeToggle.textContent='Dark';} localStorage.setItem('theme',mode); }
-        apply(stored || (prefersDark ? 'dark' : 'light'));
-        themeToggle.addEventListener('click', () => apply(root.classList.contains('dark') ? 'light' : 'dark'));
-
-        // Mobile menu
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
-        // Parallax: different speeds per layer
-        const la = document.querySelector('.pcb-a');
-        const lb = document.querySelector('.pcb-b');
-        const lc = document.querySelector('.pcb-c');
-        let y=0, ticking=false;
-        function onScroll(){
-          y = window.scrollY;
-          if(!ticking){
-            requestAnimationFrame(()=>{
-              la.style.transform = `translate3d(0, ${-y*0.06}px, 0)`;
-              lb.style.transform = `translate3d(0, ${-y*0.11}px, 0)`;
-              lc.style.transform = `translate3d(0, ${-y*0.18}px, 0)`;
-              ticking=false;
-            });
-            ticking=true;
-          }
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-
-        // Year
-        document.getElementById('year').textContent = new Date().getFullYear();
-      });
-    </script>
-  </body>
-</html>
+      .pcb-b { background-size: 780px 780px; opacity: .
