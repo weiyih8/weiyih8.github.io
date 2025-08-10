@@ -45,7 +45,8 @@
     <style>
       html { scroll-behavior: smooth; }
       html, body { overflow-x: hidden; }
-      .section { scroll-margin-top: 5.2rem; position: relative; overflow: visible; }
+      /* EDIT 4: Changed scroll-margin-top to 4rem to perfectly match the fixed header's height */
+      .section { scroll-margin-top: 4rem; position: relative; overflow: visible; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
       
@@ -57,9 +58,11 @@
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
-        --vts: clamp(2.6rem, 9vh, 9rem);
+        /* EDIT 2: Larger font size for vertical titles to fill more space */
+        --vts: clamp(8rem, 70vh, 70rem);
         --vt-strip: clamp(96px, 12vw, 164px);
-        --vt-shift: clamp(-6vh, 4vh, 10vh);
+        /* EDIT 2: Reset vertical shift for better centering with new large size */
+        --vt-shift: 0;
       }
       .dark {
         --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
@@ -101,16 +104,16 @@
     <div class="h-1 w-full bg-gradient-to-r from-brand-amber via-brand-orange to-brand-amber relative z-10"></div>
 
     <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-nightA/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between md:grid md:grid-cols-3">
         <a href="#home" class="font-display font-extrabold tracking-tight text-2xl md:text-3xl lg:text-4xl">Weiyi Huang</a>
-        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px]">
+        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px] md:justify-self-center">
           <a href="#experience" class="underline-link">Experience</a>
           <a href="#education" class="underline-link">Education</a>
           <a href="#projects" class="underline-link">Projects</a>
           <a href="#leadership" class="underline-link">Leadership</a>
           <a href="#contact" class="underline-link">Contact</a>
         </nav>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 md:justify-self-end">
           <button id="themeToggle" class="p-2 rounded-md border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100/60 dark:hover:bg-white/5" aria-label="Toggle theme">
             <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
             <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -134,7 +137,6 @@
 
     <main class="relative z-10">
       <section id="home" class="section sec-a min-h-screen grid place-items-center">
-        <div class="vtitle vtitle-left"><div class="vtitle-inner"><span>HOME</span></div></div>
         <div class="w-full pt-16 content">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div class="grid lg:grid-cols-12 gap-10 items-center">
@@ -274,10 +276,8 @@
       window.addEventListener('DOMContentLoaded', () => {
         const root = document.documentElement;
         
-        // --- Theme Toggle ---
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
-          // Find icons within the button for reliability
           const sunIcon = themeToggle.querySelector('#sunIcon');
           const moonIcon = themeToggle.querySelector('#moonIcon');
           const storedTheme = localStorage.getItem('theme');
@@ -297,12 +297,9 @@
           };
 
           themeToggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
-          
-          // Apply theme on initial load
           applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
         }
 
-        // --- Mobile Menu ---
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         if (menuBtn && mobileMenu) {
@@ -324,7 +321,6 @@
           });
         }
 
-        // --- Parallax Effect ---
         const la = document.querySelector('.pcb-a');
         const lb = document.querySelector('.pcb-b');
         const lc = document.querySelector('.pcb-c');
@@ -343,10 +339,9 @@
               }
             };
             window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll(); // Initial call
+            onScroll();
         }
 
-        // --- Active Nav Link on Scroll ---
         const sections = document.querySelectorAll('section.section');
         const navLinks = document.querySelectorAll('header nav a');
         if (sections.length > 0 && navLinks.length > 0) {
@@ -366,7 +361,6 @@
             sections.forEach(section => observer.observe(section));
         }
 
-        // --- Dynamic Year ---
         const yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
