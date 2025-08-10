@@ -45,7 +45,7 @@
     <style>
       html { scroll-behavior: smooth; }
       html, body { overflow-x: hidden; }
-      .section { scroll-margin-top: 4rem; position: relative; overflow: hidden; } /* Changed overflow */
+      .section { scroll-margin-top: 4rem; position: relative; overflow: hidden; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
       
@@ -55,7 +55,10 @@
       }
 
       :root {
-        --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
+        --sec-a: #EADCC5; --sec-b: #D9C3A6; 
+        /* EDIT: Changed to a deeper gold for better contrast in light mode */
+        --vt: #D4A017; 
+        --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
       }
       .dark {
@@ -75,18 +78,16 @@
       .pcb-b { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="780" height="780" viewBox="0 0 780 780"><rect width="100%" height="100%" fill="transparent"/><g stroke="%23E76219" stroke-width="2.0" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.85"><path d="M760 120 L580 120 L540 160 L380 160 L340 120 L180 120 L140 160"/><path d="M720 360 L540 360 L480 420 L300 420 L240 360 L80 360"/></g></svg>'); }
       .pcb-c { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><rect width="100%" height="100%" fill="transparent"/><g stroke="%239CCFBF" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.8"><path d="M40 200 L220 200 L260 240 L440 240 L480 200 L680 200 L720 240"/><path d="M120 560 L320 560 L380 500 L580 500 L640 560 L840 560"/></g></svg>'); }
       
-      /* REMOVED all .vtitle CSS */
-
-      /* ADDED: New styling for horizontal section titles */
       .section-title {
         font-family: 'Orbitron', sans-serif;
         font-weight: 700;
         color: var(--vt);
-        font-size: clamp(3rem, 6vw, 5rem);
+        /* EDIT: Increased font size by 20% */
+        font-size: clamp(3.6rem, 7.2vw, 6rem);
         line-height: 1.1;
         letter-spacing: 0.02em;
         position: relative;
-        width: max-content; /* Ensure underline does not stretch full width */
+        width: max-content;
       }
       .section-title::after {
         content: '';
@@ -94,13 +95,11 @@
         bottom: -4px;
         left: 0;
         height: 3px;
-        width: 40%;
+        /* EDIT: Changed width to 100% for a full underline */
+        width: 100%;
         background-color: var(--vt);
-        transition: width 0.3s ease;
       }
-      .section:hover .section-title::after {
-        width: 80%;
-      }
+      /* Removed the hover state for the underline */
 
       .content { position: relative; z-index: 10; }
       .focus-card { background: rgba(255,255,255,.72); }
@@ -155,7 +154,7 @@
             <div class="grid lg:grid-cols-12 gap-10 items-center">
               <div class="lg:col-span-7">
                 <h1 class="font-headline font-extrabold tracking-tight text-5xl md:text-7xl leading-[0.95]">
-                  Reliable autonomy, <span class="text-brand-amber">built</span> end‑to‑end.
+                  Reliable autonomy, <span style="color:var(--vt)">built</span> end‑to‑end.
                 </h1>
                 <p class="mt-6 text-lg md:text-xl max-w-prose opacity-[0.9] font-body">
                   Weiyi Huang is an Electrical & Computer Engineering student specializing in UAV systems, embedded systems, and applied AI. Work includes 100V/150A power electronics, CAN bus (UAVCAN/DroneCAN) integration with ArduPilot, and multi‑camera perception pipelines for reliable autonomy.
