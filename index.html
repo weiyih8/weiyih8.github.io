@@ -23,11 +23,13 @@
                 amber: '#FFA712',
                 orange: '#E76219',
                 red: '#C21717',
-                brownLight: '#E6D2B3',
-                brownDark: '#562717',
-                cream: '#F5EBDD',
+                brownA: '#EADCC5',   // light mode shade A
+                brownB: '#D9C3A6',   // light mode shade B
+                nightA: '#0F1B2B',   // dark mode shade A (new scheme)
+                nightB: '#0B1320',   // dark mode shade B (new scheme)
+                retroGold: '#C49A3A',
                 retroTeal: '#3B6A6C',
-                retroGold: '#C49A3A'
+                mint: '#9CCFBF'
               },
               ink: '#140C0C'
             }
@@ -41,68 +43,65 @@
 
     <style>
       html { scroll-behavior: smooth; }
-      /* Make anchor jumps account for fixed header */
-      .section { scroll-margin-top: 5.2rem; }
+      .section { scroll-margin-top: 5.2rem; position: relative; }
       .underline-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .3s ease; }
       .underline-link:hover { background-size: 100% 2px; }
 
-      /* === PARALLAX: three randomized layers === */
-      .pcb-layer { position: fixed; inset: -10vh 0; pointer-events: none; z-index: 0; background-repeat: repeat; will-change: transform; }
-      /* Different scale/rotation/opacity per layer for organic variation */
-      .pcb-a { background-size: 680px 680px; opacity: .12; transform: rotate(0.6deg); }
-      .pcb-b { background-size: 760px 760px; opacity: .10; transform: rotate(-0.8deg); }
-      .pcb-c { background-size: 900px 900px; opacity: .08; transform: rotate(1.3deg); }
-      .dark .pcb-a { opacity: .16; }
-      .dark .pcb-b { opacity: .14; }
-      .dark .pcb-c { opacity: .12; }
+      /* === Two-shade scheme (light vs dark via CSS variables) === */
+      :root { --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #C49A3A; --text: #140C0C; }
+      .dark { --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3; }
+      body { background: var(--sec-a); color: var(--text); }
+      .sec-a { background: var(--sec-a); }
+      .sec-b { background: var(--sec-b); }
 
-      /* 45° + 90° trace motifs; three different SVGs to avoid repetition */
+      /* === Parallax PCB background: three varied layers === */
+      .pcb-layer { position: fixed; inset: -10vh 0; pointer-events: none; z-index: 0; background-repeat: repeat; will-change: transform; }
+      .pcb-a { background-size: 680px 680px; opacity: .11; transform: rotate(0.6deg); }
+      .pcb-b { background-size: 780px 780px; opacity: .09; transform: rotate(-0.8deg); }
+      .pcb-c { background-size: 920px 920px; opacity: .07; transform: rotate(1.2deg); }
+      .dark .pcb-a { opacity: .15; }
+      .dark .pcb-b { opacity: .13; }
+      .dark .pcb-c { opacity: .11; }
+
+      /* SVG patterns: mostly amber/orange, minimal red */
       .pcb-a { background-image: url('data:image/svg+xml;utf8,\
         <svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680">\
           <rect width="100%" height="100%" fill="transparent"/>\
-          <g stroke="%23C21717" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.8">\
-            <path d="M20 60 L140 60 L180 100 L300 100 L340 60 L520 60 L560 100"/>\
+          <g stroke="%23FFA712" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.8">\
+            <path d="M20 60 L160 60 L200 100 L340 100 L380 60 L560 60 L600 100"/>\
             <path d="M40 300 L200 300 L260 240 L420 240 L480 300 L640 300"/>\
             <path d="M80 520 L260 520 L320 460 L520 460"/>\
           </g>\
-          <g fill="%23FFA712" opacity="0.7">\
-            <circle cx="180" cy="100" r="4"/><circle cx="340" cy="60" r="4"/><circle cx="320" cy="460" r="4"/>\
+          <g fill="%23E76219" opacity="0.7">\
+            <circle cx="200" cy="100" r="4"/><circle cx="320" cy="460" r="4"/>\
           </g>\
         </svg>'); }
       .pcb-b { background-image: url('data:image/svg+xml;utf8,\
-        <svg xmlns="http://www.w3.org/2000/svg" width="760" height="760" viewBox="0 0 760 760">\
+        <svg xmlns="http://www.w3.org/2000/svg" width="780" height="780" viewBox="0 0 780 780">\
           <rect width="100%" height="100%" fill="transparent"/>\
           <g stroke="%23E76219" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.7">\
-            <path d="M740 120 L560 120 L520 160 L360 160 L320 120 L140 120 L100 160"/>\
-            <path d="M700 360 L520 360 L460 420 L280 420 L220 360 L60 360"/>\
-          </g>\
-          <g fill="%23C21717" opacity="0.75">\
-            <circle cx="520" cy="160" r="4"/><circle cx="460" cy="420" r="4"/>\
+            <path d="M760 120 L580 120 L540 160 L380 160 L340 120 L180 120 L140 160"/>\
+            <path d="M720 360 L540 360 L480 420 L300 420 L240 360 L80 360"/>\
           </g>\
         </svg>'); }
       .pcb-c { background-image: url('data:image/svg+xml;utf8,\
-        <svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">\
+        <svg xmlns="http://www.w3.org/2000/svg" width="920" height="920" viewBox="0 0 920 920">\
           <rect width="100%" height="100%" fill="transparent"/>\
-          <g stroke="%23FFA712" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.6">\
+          <g stroke="%239CCFBF" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="round" fill="none" opacity="0.6">\
             <path d="M40 200 L220 200 L260 240 L440 240 L480 200 L680 200 L720 240"/>\
             <path d="M120 560 L320 560 L380 500 L580 500 L640 560 L840 560"/>\
           </g>\
-          <g fill="%23E76219" opacity="0.7">\
-            <circle cx="260" cy="240" r="3.5"/><circle cx="380" cy="500" r="3.5"/>\
-          </g>\
         </svg>'); }
 
-      /* Alternating section backgrounds with retro palette tints */
-      .sec-alt-1 { background: rgba(253, 220, 169, 0.45); } /* tan wash */
-      .sec-alt-2 { background: rgba(194, 23, 23, 0.08); }  /* red wash */
-      .sec-alt-3 { background: rgba(196, 154, 58, 0.10); } /* retro gold wash */
-      .dark .sec-alt-1 { background: rgba(230, 210, 179, 0.10); }
-      .dark .sec-alt-2 { background: rgba(194, 23, 23, 0.14); }
-      .dark .sec-alt-3 { background: rgba(196, 154, 58, 0.12); }
+      /* === Vertical, oversized titles behind content === */
+      .vtitle { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; pointer-events: none; z-index: 0; }
+      .vtitle span { font-family: Teko, ui-sans-serif, system-ui, sans-serif; font-weight: 700; letter-spacing: .02em; color: var(--vt); line-height: 1; }
+      .vtitle-left { left: 0; transform: translateX(-35%) rotate(-90deg); transform-origin: left top; }
+      .vtitle-right { right: 0; transform: translateX(35%) rotate(90deg); transform-origin: right top; }
+      .vtitle span { font-size: min(22vw, 280px); opacity: 1; }
 
-      /* Base browns */
-      body { background-color: #E6D2B3; color: #140C0C; }
-      .dark body, .dark { background-color: #562717; color: #EEE; }
+      /* Ensure content overlays titles */
+      .content { position: relative; z-index: 10; }
     </style>
   </head>
 
@@ -112,27 +111,27 @@
     <div class="pcb-layer pcb-b"></div>
     <div class="pcb-layer pcb-c"></div>
 
-    <!-- Accent bar (more red/retro) -->
-    <div class="h-1 w-full bg-gradient-to-r from-brand-red via-brand-orange to-brand-amber relative z-10"></div>
+    <!-- Accent bar: retro gold → amber → orange (less red) -->
+    <div class="h-1 w-full bg-gradient-to-r from-brand-retroGold via-brand-amber to-brand-orange relative z-10"></div>
 
     <!-- Sticky top nav -->
-    <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-brownDark/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
+    <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-nightA/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a href="#home" class="font-display font-extrabold tracking-tight text-2xl md:text-3xl lg:text-4xl">Weiyi Huang</a>
         <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px]">
-          <a href="#experience" class="hover:text-brand-red underline-link">Experience</a>
-          <a href="#education" class="hover:text-brand-red underline-link">Education</a>
-          <a href="#projects" class="hover:text-brand-red underline-link">Projects</a>
-          <a href="#leadership" class="hover:text-brand-red underline-link">Leadership</a>
-          <a href="#contact" class="hover:text-brand-red underline-link">Contact</a>
+          <a href="#experience" class="hover:text-brand-retroGold underline-link">Experience</a>
+          <a href="#education" class="hover:text-brand-retroGold underline-link">Education</a>
+          <a href="#projects" class="hover:text-brand-retroGold underline-link">Projects</a>
+          <a href="#leadership" class="hover:text-brand-retroGold underline-link">Leadership</a>
+          <a href="#contact" class="hover:text-brand-retroGold underline-link">Contact</a>
         </nav>
         <div class="flex items-center gap-2">
-          <button id="themeToggle" class="px-3 py-1.5 text-sm rounded-md border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100/60 dark:hover:bg-black/30" aria-label="Toggle theme">Dark</button>
+          <button id="themeToggle" class="px-3 py-1.5 text-sm rounded-md border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100/60 dark:hover:bg-white/5" aria-label="Toggle theme">Dark</button>
           <button id="menuBtn" class="md:hidden p-2 rounded border border-neutral-300 dark:border-neutral-700" aria-label="Open menu">☰</button>
         </div>
       </div>
       <div id="mobileMenu" class="md:hidden hidden border-t border-neutral-200 dark:border-neutral-800">
-        <nav class="px-4 py-3 flex flex-col gap-2 text-base" style="background:rgba(230,210,179,.95)">
+        <nav class="px-4 py-3 flex flex-col gap-2 text-base" style="background:var(--sec-a)">
           <a href="#experience" class="py-2">Experience</a>
           <a href="#education" class="py-2">Education</a>
           <a href="#projects" class="py-2">Projects</a>
@@ -142,14 +141,15 @@
       </div>
     </header>
 
-    <!-- HERO (sec-alt-1) -->
-    <section id="home" class="section min-h-screen grid place-items-center relative z-10 sec-alt-1">
-      <div class="w-full pt-16">
+    <!-- HERO (sec-a) -->
+    <section id="home" class="section sec-a min-h-screen grid place-items-center relative">
+      <div class="vtitle vtitle-left"><span>HOME</span></div>
+      <div class="w-full pt-16 content">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div class="grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7">
               <h1 class="font-display font-extrabold tracking-tight text-5xl md:text-7xl leading-[0.95]">
-                Reliable autonomy, <span class="text-brand-red">built</span> end‑to‑end.
+                Reliable autonomy, <span class="text-brand-retroGold">built</span> end‑to‑end.
               </h1>
               <p class="mt-6 text-lg md:text-xl max-w-prose opacity-[0.9]">
                 Weiyi Huang is an Electrical & Computer Engineering student specializing in UAV systems, embedded systems, and applied AI. Work includes 100V/150A power electronics, CAN bus (UAVCAN/DroneCAN) integration with ArduPilot, and multi‑camera perception pipelines for reliable autonomy.
@@ -177,12 +177,12 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE (plain) -->
-    <section id="experience" class="section min-h-screen flex items-center relative z-10">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <!-- EXPERIENCE (sec-b) -->
+    <section id="experience" class="section sec-b min-h-screen flex items-center relative">
+      <div class="vtitle vtitle-right"><span>EXPERIENCE</span></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
         <div class="py-16 md:py-28">
-          <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight text-brand-red">EXPERIENCE</h2>
-          <div class="mt-10 space-y-10 md:space-y-14">
+          <div class="mt-2 space-y-10 md:space-y-14">
             <div>
               <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
               <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi leads the electrical architecture for <em>LawnDart</em>, a custom unmanned aircraft aimed at speed records. Responsibilities include high‑current power distribution (100V/150A), radio links (RX/TX), FPV integration, and safety interlocks. A custom motor test stand was designed with force sensing and laser tachometry to measure thrust, RPM, and efficiency maps. Firmware bring‑up on iNAV and PID tuning support high‑speed stability. Keywords: UAV, power electronics, ESC characterization, iNAV, PCB design, instrumentation, signal integrity.</p>
@@ -204,12 +204,12 @@
       </div>
     </section>
 
-    <!-- EDUCATION (sec-alt-2) -->
-    <section id="education" class="section min-h-screen flex items-center relative z-10 sec-alt-2">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <!-- EDUCATION (sec-a) -->
+    <section id="education" class="section sec-a min-h-screen flex items-center relative">
+      <div class="vtitle vtitle-left"><span>EDUCATION</span></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
         <div class="py-16 md:py-28 text-right">
-          <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight text-brand-red">EDUCATION</h2>
-          <div class="mt-10 space-y-10 md:space-y-14 md:ml-auto md:max-w-4xl">
+          <div class="mt-2 space-y-10 md:space-y-14 md:ml-auto md:max-w-4xl">
             <div>
               <h3 class="font-display text-2xl md:text-4xl font-semibold">Cornell University — B.S. Electrical & Computer Engineering</h3>
               <p class="mt-3 text-base md:text-lg">Aerospace Engineering minor • Expected May 2027</p>
@@ -224,12 +224,12 @@
       </div>
     </section>
 
-    <!-- PROJECTS (sec-alt-3) -->
-    <section id="projects" class="section min-h-screen flex items-center relative z-10 sec-alt-3">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <!-- PROJECTS (sec-b) -->
+    <section id="projects" class="section sec-b min-h-screen flex items-center relative">
+      <div class="vtitle vtitle-right"><span>PROJECTS</span></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
         <div class="py-16 md:py-28">
-          <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight text-brand-red">PROJECTS</h2>
-          <div class="mt-10 space-y-8 md:space-y-10 text-base md:text-lg max-w-4xl">
+          <div class="mt-2 space-y-8 md:space-y-10 text-base md:text-lg max-w-4xl">
             <p><span class="font-semibold">100V/150A UAV arming system:</span> pre‑charge + main contactor (Schaltbau) path with flyback protection and compact PCB layout. Characterization included inrush control, thermal behavior, and SOA‑constrained component selection. Keywords: power electronics, contactors, pre‑charge, transient suppression, KiCad, test instrumentation.</p>
             <p><span class="font-semibold">DroneCAN ESC on CubePilot:</span> CAN bus wiring/termination, parameter tuning for robust initialization, and Mission Planner passthrough over WireGuard VPN for remote telemetry and tuning. Keywords: UAVCAN/DroneCAN, ArduPilot, networking, telemetry, iptables, MTU, latency.</p>
             <p><span class="font-semibold">Multi‑camera voxel grid:</span> DepthAI capture and calibration‑aware voxelizer with early‑frame rejection and exposure settling. Investigated single‑cone artifacts; corrected transform math for multi‑baseline consistency. Keywords: computer vision, 3D reconstruction, DepthAI, calibration, Python/C++.</p>
@@ -239,12 +239,12 @@
       </div>
     </section>
 
-    <!-- LEADERSHIP (plain) -->
-    <section id="leadership" class="section min-h-screen flex items-center relative z-10">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <!-- LEADERSHIP (sec-a) -->
+    <section id="leadership" class="section sec-a min-h-screen flex items-center relative">
+      <div class="vtitle vtitle-left"><span>LEADERSHIP</span></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
         <div class="py-16 md:py-28 text-right">
-          <h2 class="font-headline text-[10vw] md:text-8xl leading-none tracking-tight text-brand-red">LEADERSHIP</h2>
-          <div class="mt-10 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl">
+          <div class="mt-2 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl">
             <p><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> founded a 501(c)(3) campus chapter that connects under‑resourced students with application resources. Built a 7‑member exec team and a 12‑mentor cohort; organized monthly hybrid events; coordinated with the national organization and campus partners for venue, outreach, and impact tracking. Keywords: non‑profit, program management, team building, outreach, mentorship.</p>
             <p><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (three years); Rowing Team Captain (two years).</p>
           </div>
@@ -252,14 +252,15 @@
       </div>
     </section>
 
-    <!-- CONTACT (sec-alt-1 again) -->
-    <section id="contact" class="section min-h-screen flex items-center relative z-10 sec-alt-1">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <!-- CONTACT (sec-b) -->
+    <section id="contact" class="section sec-b min-h-screen flex items-center relative">
+      <div class="vtitle vtitle-right"><span>CONTACT</span></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full content">
         <div class="py-16 md:py-28 text-center">
-          <h2 class="font-headline text-[12vw] md:text-8xl leading-none tracking-tight text-brand-red">LET’S TALK</h2>
+          <h2 class="font-headline text-[12vw] md:text-8xl leading-none tracking-tight" style="color:var(--vt)">LET’S TALK</h2>
           <p class="mt-6 text-lg md:text-xl">Fastest response via email.</p>
           <div class="mt-8 flex flex-wrap gap-4 justify-center">
-            <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-6 py-3 bg-brand-red text-white hover:opacity-90">Email me</a>
+            <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-6 py-3 bg-brand-retroGold text-white hover:opacity-90">Email me</a>
             <a href="https://www.linkedin.com/in/wh474/" class="inline-flex items-center rounded-md px-6 py-3 ring-1 ring-neutral-500">LinkedIn</a>
           </div>
         </div>
@@ -287,12 +288,7 @@
         if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // Smooth native anchor scroll (but ensure header offset via scroll-margin on sections)
-        document.querySelectorAll('header nav a, #mobileMenu a').forEach(a => a.addEventListener('click', e => {
-          // Let native smooth scroll handle it; no JS animation to avoid jank
-        }));
-
-        // Parallax: different speeds per layer for randomness
+        // Parallax: different speeds per layer
         const la = document.querySelector('.pcb-a');
         const lb = document.querySelector('.pcb-b');
         const lc = document.querySelector('.pcb-c');
