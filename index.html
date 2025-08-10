@@ -56,14 +56,19 @@
 
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; 
-        /* EDIT: Changed to a deeper gold for better contrast in light mode */
         --vt: #D4A017; 
         --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
       }
       .dark {
-        --sec-a: #0F1B2B; --sec-b: #0B1320; --vt: #9CCFBF; --text: #EAEFF3;
-        --sec-a-veil: rgba(15,27,43,0.42); --sec-b-veil: rgba(11,19,32,0.36);
+        /* EDIT: Changed --sec-a to a lighter blue for better contrast */
+        --sec-a: #1A3A5A; 
+        --sec-b: #0B1320; 
+        --vt: #9CCFBF; 
+        --text: #EAEFF3;
+        /* EDIT: Updated corresponding veil color */
+        --sec-a-veil: rgba(26, 58, 90, 0.42); 
+        --sec-b-veil: rgba(11,19,32,0.36);
       }
       body { background: var(--sec-a); color: var(--text); }
       .sec-a { background: var(--sec-a-veil); }
@@ -82,7 +87,6 @@
         font-family: 'Orbitron', sans-serif;
         font-weight: 700;
         color: var(--vt);
-        /* EDIT: Increased font size by 20% */
         font-size: clamp(3.6rem, 7.2vw, 6rem);
         line-height: 1.1;
         letter-spacing: 0.02em;
@@ -95,11 +99,16 @@
         bottom: -4px;
         left: 0;
         height: 3px;
-        /* EDIT: Changed width to 100% for a full underline */
-        width: 100%;
+        /* EDIT: Set initial width to 0 for animation */
+        width: 0%;
         background-color: var(--vt);
+        /* EDIT: Added transition back */
+        transition: width 0.3s ease;
       }
-      /* Removed the hover state for the underline */
+      /* EDIT: Added hover state back to animate the underline to full width */
+      .section:hover .section-title::after {
+        width: 100%;
+      }
 
       .content { position: relative; z-index: 10; }
       .focus-card { background: rgba(255,255,255,.72); }
@@ -118,7 +127,7 @@
     <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-nightA/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between md:grid md:grid-cols-3">
         <a href="#home" class="font-display font-extrabold tracking-tight text-2xl md:text-3xl lg:text-4xl">Weiyi Huang</a>
-        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px] md:justify-self-center">
+        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px] md:justify-self-center md:relative md:left-[-1.5rem]">
           <a href="#experience" class="underline-link">Experience</a>
           <a href="#education" class="underline-link">Education</a>
           <a href="#projects" class="underline-link">Projects</a>
@@ -383,7 +392,12 @@
         }
 
         const yearEl = document.getElementById('year');
-        if (yearEl) yearEl.textContent = new Date().getFullYear();
+        if (yearEl) {
+          // Set the year based on the current date in Long Beach, CA (PDT)
+          const now = new Date();
+          const longBeachDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+          yearEl.textContent = longBeachDate.getFullYear();
+        }
       });
     </script>
   </body>
