@@ -57,10 +57,9 @@
       :root {
         --sec-a: #EADCC5; --sec-b: #D9C3A6; --vt: #E9C46A; --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
-        /* CORRECTED: Restored to a more balanced, but still larger, font size */
-        --vts: clamp(4rem, 10vw, 10rem);
-        --vt-strip: clamp(96px, 12vw, 164px);
-        /* CORRECTED: Restored the original vertical shift for proper alignment */
+        /* EDIT: Increased font size and container width to make titles appear wider/stretched */
+        --vts: clamp(4rem, 11vw, 11rem);
+        --vt-strip: clamp(100px, 13vw, 180px);
         --vt-shift: clamp(-6vh, 4vh, 10vh);
       }
       .dark {
@@ -84,7 +83,8 @@
       .vtitle-left { left: 0; }
       .vtitle-right { right: 0; }
       .vtitle-inner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + var(--vt-shift))); }
-      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: .04em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
+      /* EDIT: Reduced letter-spacing to make the titles vertically shorter */
+      .vtitle-inner span { display: inline-block; font-family: Orbitron, sans-serif; font-weight: 800; letter-spacing: 0em; color: var(--vt); font-size: var(--vts); line-height: 1; opacity: 1; transform-origin: center; }
       .vtitle-left .vtitle-inner span { transform: rotate(-90deg); }
       .vtitle-right .vtitle-inner span { transform: rotate(90deg); }
 
