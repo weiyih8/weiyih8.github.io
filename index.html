@@ -61,12 +61,10 @@
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
       }
       .dark {
-        /* EDIT: Changed --sec-a to a lighter blue for better contrast */
         --sec-a: #1A3A5A; 
         --sec-b: #0B1320; 
         --vt: #9CCFBF; 
         --text: #EAEFF3;
-        /* EDIT: Updated corresponding veil color */
         --sec-a-veil: rgba(26, 58, 90, 0.42); 
         --sec-b-veil: rgba(11,19,32,0.36);
       }
@@ -99,13 +97,10 @@
         bottom: -4px;
         left: 0;
         height: 3px;
-        /* EDIT: Set initial width to 0 for animation */
         width: 0%;
         background-color: var(--vt);
-        /* EDIT: Added transition back */
         transition: width 0.3s ease;
       }
-      /* EDIT: Added hover state back to animate the underline to full width */
       .section:hover .section-title::after {
         width: 100%;
       }
@@ -127,7 +122,7 @@
     <header class="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-brand-nightA/75 border-b border-neutral-200/60 dark:border-neutral-800/80">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between md:grid md:grid-cols-3">
         <a href="#home" class="font-display font-extrabold tracking-tight text-2xl md:text-3xl lg:text-4xl">Weiyi Huang</a>
-        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px] md:justify-self-center md:relative md:left-[-1.5rem]">
+        <nav class="hidden md:flex items-center gap-7 text-[16px] lg:text-[18px] md:justify-self-center md:relative md:left-[-0.75rem]">
           <a href="#experience" class="underline-link">Experience</a>
           <a href="#education" class="underline-link">Education</a>
           <a href="#projects" class="underline-link">Projects</a>
@@ -277,8 +272,8 @@
               <h2 class="section-title">Leadership</h2>
             </div>
             <div class="mt-28 md:mt-32 space-y-10 md:space-y-12 md:ml-auto md:max-w-4xl opacity-[0.92]">
-              <p><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> founded a 501(c)(3) campus chapter that connects under‑resourced students with application resources. Built a 7‑member exec team and a 12‑mentor cohort; organized monthly hybrid events; coordinated with the national organization and campus partners for venue, outreach, and impact tracking. Keywords: non‑profit, program management, team building, outreach, mentorship.</p>
-              <p><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (three years); Rowing Team Captain (two years).</p>
+              <p class="text-base md:text-lg"><span class="font-semibold">Project Level the Field (Project LTF) — Founder & President (Cornell Chapter):</span> founded a 501(c)(3) campus chapter that connects under‑resourced students with application resources. Built a 7‑member exec team and a 12‑mentor cohort; organized monthly hybrid events; coordinated with the national organization and campus partners for venue, outreach, and impact tracking. Keywords: non‑profit, program management, team building, outreach, mentorship.</p>
+              <p class="text-base md:text-lg"><span class="font-semibold">Other:</span> Eagle Scout; President’s Volunteer Service Award (three years); Rowing Team Captain (two years).</p>
             </div>
           </div>
         </div>
@@ -393,7 +388,6 @@
 
         const yearEl = document.getElementById('year');
         if (yearEl) {
-          // Set the year based on the current date in Long Beach, CA (PDT)
           const now = new Date();
           const longBeachDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
           yearEl.textContent = longBeachDate.getFullYear();
