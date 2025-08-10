@@ -60,13 +60,14 @@
         --text: #140C0C;
         --sec-a-veil: rgba(234,220,197,0.40); --sec-b-veil: rgba(217,195,166,0.34);
       }
+      /* EDIT: New "Retro Cool" Dark Mode Palette */
       .dark {
-        --sec-a: #1A3A5A; 
-        --sec-b: #0B1320; 
-        --vt: #9CCFBF; 
-        --text: #EAEFF3;
-        --sec-a-veil: rgba(26, 58, 90, 0.42); 
-        --sec-b-veil: rgba(11,19,32,0.36);
+        --sec-a: #242230; /* Lighter charcoal purple */
+        --sec-b: #1A1822; /* Darker deep purple */
+        --vt: #FF9500;    /* Vibrant retro orange */
+        --text: #EFEFEF;  /* Soft off-white */
+        --sec-a-veil: rgba(36, 34, 48, 0.42); 
+        --sec-b-veil: rgba(26, 24, 34, 0.36);
       }
       body { background: var(--sec-a); color: var(--text); }
       .sec-a { background: var(--sec-a-veil); }
@@ -306,7 +307,6 @@
           const sunIcon = themeToggle.querySelector('#sunIcon');
           const moonIcon = themeToggle.querySelector('#moonIcon');
           const storedTheme = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
           const applyTheme = (mode) => {
             if (mode === 'dark') {
@@ -322,7 +322,8 @@
           };
 
           themeToggle.addEventListener('click', () => applyTheme(root.classList.contains('dark') ? 'light' : 'dark'));
-          applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+          // EDIT: Changed logic to default to 'dark' mode on first visit
+          applyTheme(storedTheme || 'dark');
         }
 
         const menuBtn = document.getElementById('menuBtn');
@@ -388,9 +389,12 @@
 
         const yearEl = document.getElementById('year');
         if (yearEl) {
-          const now = new Date();
-          const longBeachDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
-          yearEl.textContent = longBeachDate.getFullYear();
+          // EDIT: Updated to a more robust method for getting the year (2025)
+          const currentYear = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            timeZone: 'America/Los_Angeles',
+          }).format(new Date());
+          yearEl.textContent = currentYear;
         }
       });
     </script>
