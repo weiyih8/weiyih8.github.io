@@ -336,9 +336,9 @@
             <h2 class="font-headline text-[15vw] sm:text-[12vw] md:text-8xl leading-none tracking-tight" style="color:var(--vt)">LET’S TALK</h2>
             <p class="mt-6 text-base sm:text-lg md:text-xl">Fastest response via email.</p>
             <div class="mt-8 flex flex-wrap gap-3 sm:gap-4 justify-center">
-              <a href="mailto:wh474@cornell.edu" class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 bg-[var(--vt)] text-black hover:opacity-90 text-sm sm:text-base">Email</a>
-              <a href="https://www.linkedin.com/in/wh474/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 ring-1 ring-neutral-500 text-sm sm:text-base">LinkedIn</a>
-              <a href="Weiyi_Huang_Resume.pdf" download class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 ring-1 ring-neutral-500 text-sm sm:text-base">Resume</a>
+              <a href="mailto:wh474@cornell.edu" onclick="gtag('event', 'contact_click', { 'contact_method': 'email' });" class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 bg-[var(--vt)] text-black hover:opacity-90 text-sm sm:text-base">Email</a>
+              <a href="https://www.linkedin.com/in/wh474/" target="_blank" rel="noopener noreferrer" onclick="gtag('event', 'linkedin_click');" class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 ring-1 ring-neutral-500 text-sm sm:text-base">LinkedIn</a>
+              <a href="Weiyi_Huang_Resume.pdf" download onclick="gtag('event', 'resume_download');" class="inline-flex items-center rounded-md px-5 sm:px-6 py-3 ring-1 ring-neutral-500 text-sm sm:text-base">Resume</a>
             </div>
           </div>
         </div>
