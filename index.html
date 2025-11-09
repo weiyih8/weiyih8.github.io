@@ -36,13 +36,21 @@
             },
             colors: {
               brand: {
-                brownA: '#EADCC5',
-                brownB: '#D9C3A6',
-                nightA: '#0F1B2B',
-                nightB: '#0B1320',
-                amber: '#FFA712',
-                orange: '#E76219',
-                mint: '#9CCFBF'
+                // brownA: '#EADCC5',
+                // brownB: '#D9C3A6',
+                // nightA: '#0F1B2B',
+                // nightB: '#0B1320',
+                // amber: '#FFA712',
+                // orange: '#E76219',
+                // mint: '#9CCFBF'
+
+                brownA: '#F2F2F2',   // very light grey (was brownA)
+                brownB: '#D9D9D9',   // light grey (was brownB)
+                nightA: '#1A1A1A',   // near-black (was nightA)
+                nightB: '#0D0D0D',   // deeper near-black (was nightB)
+                amber:  '#FFC65A',   // softer amber accent
+                orange: '#E77E3B',   // muted orange accent
+                mint:   '#A7D8CC'    // subdued mint accent
               }
             }
           }
@@ -235,6 +243,10 @@
                 <h2 class="section-title mb-10 md:mb-0 md:text-right">Experience</h2>
             </div>
             <div class="md:mt-32 space-y-10 md:space-y-14">
+              <div>
+                <h3 class="font-display text-xl sm:text-2xl md:text-4xl font-semibold">MAVRIK, Inc. — Lead Electrical Engineer</h3>
+                <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">As Lead Electrical Engineer, Weiyi contributes to the entire product line, including the HATCHET Group 3 hybrid UAS. He prototypes embedded hardware PCBs in KiCad for modular payload release mechanisms, interfacing with STM32 and Cortex-M7 microcontrollers via an NVIDIA Jetson Nano. Weiyi develops low-level C++ code to integrate this payload board with custom companion software running Linux. He also architected a redundant WAN failover solution using Starlink, DoodleLabs, and LTE to ensure persistent communication, and implements flight-critical communications (CAN, PWM, I2C, UART) for components like ESCs and GPS with the Cube Orange flight controller. His systems integration leadership was a key part of winning the US Army's xTech Overwatch event. Keywords: UAS, systems integration, PCB design, KiCad, C++, embedded Linux, STM32, Cortex-M7, NVIDIA Jetson, avionics, CAN, I2C, UART, PWM, Starlink, DoodleLabs, AWS, Cube Orange, MissionPlanner.</p>
+              </div>
               <div>
                 <h3 class="font-display text-xl sm:text-2xl md:text-4xl font-semibold">Cornell AutoDrone — Electrical Subteam Lead</h3>
                 <p class="mt-3 max-w-4xl text-base md:text-lg opacity-[0.92]">Weiyi leads the electrical architecture for <em>LawnDart</em>, a custom unmanned aircraft aimed at speed records. Responsibilities include high‑current power distribution (100V/150A), radio links (RX/TX), FPV integration, and safety interlocks. A custom motor test stand was designed with force sensing and laser tachometry to measure thrust, RPM, and efficiency maps. Firmware bring‑up on iNAV and PID tuning support high‑speed stability. Keywords: UAV, power electronics, ESC characterization, iNAV, PCB design, instrumentation, signal integrity.</p>
